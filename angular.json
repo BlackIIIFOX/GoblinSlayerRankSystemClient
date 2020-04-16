@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "GoblinSlayerRankSystemClient"
+    }
+  },
+  "defaultProject": "GoblinSlayerRankSystemClient",
+  "cli": {
+    "analytics": "cd6a8218-2856-4370-98e7-fdd31459963d"
+  }
 }

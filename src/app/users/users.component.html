@@ -1,6 +1,6 @@
 <p>/api/user1</p>
-<h2>{{user.login | uppercase}} Details</h2>
-<div><span>id: </span>{{user.id}}</div>
+<h2>{{user?.login | uppercase}} Details</h2>
+<div><span>id: </span>{{user?.id}}</div>
 <label>name:
-  <input [(ngModel)]="user.login" placeholder="name"/>
+  <input [ngModel]="user?.login" (ngModelChange)="user.login = $event"  placeholder="name"/>
 </label>

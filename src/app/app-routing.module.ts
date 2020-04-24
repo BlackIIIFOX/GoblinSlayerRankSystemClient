@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 import {UsersComponent} from './users/users.component';
+import {WelcomeComponent} from './welcome/welcome.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/users', pathMatch: 'full' },
-  {path: 'users', component: UsersComponent}
+  {path: '', redirectTo: '/welcome', pathMatch: 'full'},
+  {path: 'users', component: UsersComponent},
+  {path: 'welcome', component: WelcomeComponent}
 ];
 
 @NgModule({
@@ -16,4 +18,5 @@ const routes: Routes = [
   })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

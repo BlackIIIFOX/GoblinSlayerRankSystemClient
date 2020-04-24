@@ -20,8 +20,8 @@ import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
-    UserService,
-    JwtService
+    JwtService,
+    UserService
   ]
 })
 export class CoreModule { }

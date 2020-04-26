@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService, User} from '../../../core';
 
 @Component({
@@ -10,14 +10,28 @@ import {UserService, User} from '../../../core';
 export class HeaderComponent implements OnInit {
   public currentUser: User;
 
-  constructor(private userService: UserService) { }
+  // For xs devices.
+  public isMenuCollapsed = true;
+  public isLoggedIn = false;
+
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
+    this.userService.isAuthenticated.subscribe(
+      isAuth => this.isLoggedIn = isAuth
+    );
+
     this.userService.currentUser.subscribe(
       (userData) => {
-        this.currentUser = userData;
+        if (userData) {
+          this.currentUser = userData;
+        }
       }
     );
   }
 
+  logOut() {
+    this.userService.logOut();
+  }
 }

@@ -16,6 +16,7 @@ import {
   HeaderComponent,
   SharedModule
 } from './shared';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import {
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemUserDataService, {dataEncapsulation: false}
-    )
+    ),
+
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,9 +8,9 @@ import {User} from '../models';
 export class InMemUserDataService implements InMemoryDbService {
   createDb() {
     const users = [
-      {id: 1, login: 'admin'},
-      {id: 2, login: 'goblin_slayer'},
-      {id: 3, login: 'guild_girl'}
+      {id: 1, email: 'admin', token: '1234123', name: 'Admin', bio: 'admin', image: undefined},
+      // {id: 2, email: 'goblin_slayer'},
+      // {id: 3, email: 'guild_girl'}
     ];
 
     return {users};

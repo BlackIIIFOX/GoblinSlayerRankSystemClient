@@ -1,13 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {ShowAuthedDirective} from './show-authed.directive';
+import { ListErrorsComponent } from './layout';
 
 @NgModule({
-  declarations: [ShowAuthedDirective],
-  imports: [
-    CommonModule,
-    RouterModule
-  ]
+    declarations: [ListErrorsComponent],
+    exports: [
+      ListErrorsComponent
+    ],
+    imports: [
+        CommonModule,
+        RouterModule,
+    ]
 })
 export class SharedModule { }

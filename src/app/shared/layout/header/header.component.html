@@ -1,74 +1,55 @@
-<nav class="navbar navbar-light">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/">conduit</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class=" navbar-brand ml-5" routerLink="/">The Contract System</a>
 
+  <button class="navbar-toggler"
+          type="button"
+          (click)="isMenuCollapsed = !isMenuCollapsed"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
     <!-- Show this for logged out users -->
-    <ul *appShowAuthed="false"
-        class="nav navbar-nav pull-xs-right">
-
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="/">
-          Home
-        </a>
-      </li>
-
+    <ul *ngIf="!isLoggedIn" class="navbar-nav ml-auto mr-3">
       <li class="nav-item">
         <a class="nav-link"
            routerLink="/login"
+           (click)="isMenuCollapsed = true"
            routerLinkActive="active">
-          Sign in
+          Вход
         </a>
       </li>
-
       <li class="nav-item">
         <a class="nav-link"
            routerLink="/register"
+           (click)="isMenuCollapsed = true"
            routerLinkActive="active">
-          Sign up
+          Регистрация
         </a>
       </li>
-
     </ul>
 
     <!-- Show this for logged in users -->
-    <ul *appShowAuthed="true"
-        class="nav navbar-nav pull-xs-right">
+    <ul *ngIf="isLoggedIn" class="navbar-nav ml-auto mr-5">
+      <div *ngIf="!currentUser" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
 
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="/"
-           routerLinkActive="active"
-           [routerLinkActiveOptions]="{ exact: true }">
-          Home
-        </a>
+      <li *ngIf="currentUser" class="nav-item dropdown">
+        <div ngbDropdown class="d-inline-block">
+          <a ngbDropdownToggle class="nav-link"
+             id="dropdownMenu2"
+             routerLinkActive="active">
+            <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" alt="user image"/>
+            {{ currentUser.name }}
+          </a>
+          <!-- use  ngbDropdownMenu -->
+          <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <button class="dropdown-item">Настройки</button>
+            <button class="dropdown-item" (click)="logOut()">Выйти</button>
+          </div>
+        </div>
       </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="/editor"
-           routerLinkActive="active">
-          <i class="ion-compose"></i>&nbsp;New Article
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-           routerLink="/settings"
-           routerLinkActive="active">
-          <i class="ion-gear-a"></i>&nbsp;Settings
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link"
-           [routerLink]="['/profile', currentUser.name]"
-           routerLinkActive="active">
-          <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
-          {{ currentUser.name }}
-        </a>
-      </li>
-
     </ul>
 
   </div>

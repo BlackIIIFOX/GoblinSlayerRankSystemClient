@@ -17,13 +17,15 @@ import {
   SharedModule
 } from './shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

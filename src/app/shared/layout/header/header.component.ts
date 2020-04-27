@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService, User} from '../../../core';
+import {Role} from '../../../core';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import {UserService, User} from '../../../core';
 
 export class HeaderComponent implements OnInit {
   public currentUser: User;
+  public RoleEnum = Role;
 
   // For xs devices.
   public isMenuCollapsed = true;

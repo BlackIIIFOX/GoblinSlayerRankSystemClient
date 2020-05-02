@@ -11,13 +11,14 @@ import {InMemUserDataService} from './core/mock';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {AuthModule} from './auth/auth.module';
 
+
 import {
   FooterComponent,
   HeaderComponent,
   SharedModule
 } from './shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminPanelComponent } from './admin-panel';
 
 @NgModule({
   declarations: [

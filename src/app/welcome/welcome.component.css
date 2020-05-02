@@ -1,60 +1,24 @@
-#divBack {
-  background: url("../../assets/img/welcome_background.jpg") top no-repeat;
-
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  justify-content: center;
-  border-top: 1px solid black;
-  font-size: 24px;
+.img-fluid {
+  height: 30rem;
+  min-width:100%;
+}
+.image-slider-first:after {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(0,0,0,0.3);
 }
 
-#blackTheme {
-  position: absolute;
-  background: url(https://amazingcarousel.com/wp-content/uploads/amazingcarousel/3/images/lightbox/golden-wheat-field-lightbox.jpg) center no-repeat;
-  -webkit-background-size: cover;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
+.image-slider-second:after {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(0,0,0,0.5);
 }
 
-
-#blackTheme:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,.5);
-  z-index: 2;
-}
-
-#welcomePage {
-  display: flex;
-  z-index: 3;
-}
-
-#welcome_text {
-  align-self: center;
-  justify-self: center;
-  font-size: 100px;
-  color: aliceblue;
-}
-
-#buttonsSign {
-  margin-top: 30px;
-  position: absolute;
-  right: 5%;
-  display:inline-block;
-}
-
-.signButton {
-  margin-left: 10px;
-}

@@ -10,7 +10,7 @@ import {UserService} from './core/services';
 export class AppComponent implements OnInit {
   title = 'GoblinSlayerRankSystemClient';
 
-  constructor(private userService: UserService) {
+  constructor(public router: Router, private userService: UserService) {
   }
 
   ngOnInit(): void {

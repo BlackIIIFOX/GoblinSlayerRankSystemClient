@@ -1,1 +1,57 @@
+<ngb-carousel *ngIf="images">
+  <ng-template ngbSlide>
+    <div class="image-slider-first">
+      <img class='img-fluid' [src]="images[0]" alt="Random first slide">
+    </div>
+
+    <div class="carousel-caption">
+      <h1 class="text-white display-3 d-none d-sm-block">Решим вашу проблему</h1>
+      <h2 class="text-white d-block d-sm-none">Решим вашу проблему</h2>
+      <p>Мы примем ваш контракт и устраним всех гоблинов в кратчайшие сроки!</p>
+    </div>
+  </ng-template>
+  <ng-template ngbSlide>
+    <div class="image-slider-second">
+      <img class='img-fluid' [src]="images[1]" alt="Random second slide">
+    </div>
+
+    <div class="carousel-caption">
+      <h1 class="text-white display-3 d-none d-sm-block">Присоединяйтесь к нам</h1>
+      <h2 class="text-white d-block d-sm-none">Присоединяйтесь к нам</h2>
+      <p>Мы всегда рады новым авантюристам. Вас ожилают достойные награды и своевременные выплаты!</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<div class="container mt-5 text-center">
+  <h2>Как это работает?</h2>
+
+  <div class="row mt-4">
+    <div class="col-md-4 col-sm-12">
+      <i class="fas fa-scroll fa-7x mb-3"></i>
+      <p>Вы создаете заказ, описываете его и предлагаете вознагрождение. Учитывайте уровень опасности задания и
+        выставляйте соотвествующую награду.</p>
+    </div>
+
+    <div class="col-md-4 col-sm-12">
+      <i class="fas fa-balance-scale-left fa-7x mb-3"></i>
+      <p>Мы рассматриваем ваш заказ и одобряем. После одобрения требуется внести плату за заказ.</p>
+    </div>
+
+    <div class="col-md-4 col-sm-12">
+      <i class="fas fa-vote-yea fa-7x mb-3"></i>
+      <p>Наши авантюристы начинают исполнение контракта. Все ваши гоблины будут устранены в кратчайшие сроки!</p>
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron mt-5">
+  <h2 class="display-4">Какие заказы мы принимаем?</h2>
+  <p class="lead">Гильдия авантюристов старается принимать большенство заказав, связанных как с мирными ситуациями,
+    так и с экстренными. Мы стараемся помочь каждому заказчика, а если не сможем, то неприменно свяжемся с вами и
+    вернем оплату.</p>
+  <hr class="my-4">
+  <p>Если вам нужна срочная помощь, то спешите зарегистрироваться и уведомить нас о вашей проблеме.</p>
+  <a class="btn btn-primary btn-lg" routerLink="/register" role="button">Регистрация</a>
+</div>
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService, User} from '../../../core';
+import {AccountService, User} from '../../../core';
 import {Role} from '../../../core';
 
 @Component({
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   public isMenuCollapsed = true;
   public isLoggedIn = false;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: AccountService) {
   }
 
   ngOnInit(): void {

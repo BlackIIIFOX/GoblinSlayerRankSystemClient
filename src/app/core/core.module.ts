@@ -1,17 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {HttpTokenInterceptor} from './interceptors';
-import {InMemUserDataService} from './mock';
 
 import {
+  ApiService,
   JwtService,
-  UserService
+  AccountService,
+  AuthGuard,
+  UsersService
 } from './services';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-
-
 
 @NgModule({
   declarations: [],
@@ -21,7 +20,11 @@ import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true},
     JwtService,
-    UserService
+    AccountService,
+    ApiService,
+    AuthGuard,
+    UsersService
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

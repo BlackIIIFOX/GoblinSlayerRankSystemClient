@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import {Errors, UserService} from '../core';
+import {AccountService, Errors} from '../core';
 
 @Component({
   selector: 'app-auth-page',
@@ -19,7 +19,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
+    private userService: AccountService,
     private fb: FormBuilder
   ) {
     // use FormBuilder to create a form group

@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h4 class="modal-title">Update user № {{user.user_id}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="userUpdateForm" name="updateRestaurantForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Role</label>
+      <select class="form-control" id="exampleFormControlSelect1" formControlName="role">
+        <option>Client</option>
+        <option>Manager</option>
+        <option>Waiter</option>
+        <option>Cook</option>
+      </select>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="isBlocked" formControlName="isBlocked">
+      <label class="form-check-label" for="isBlocked">Is Blocked</label>
+    </div>
+
+    <hr/>
+    <button type="submit" class="btn btn-primary" [disabled]="userUpdateForm?.invalid">Update</button>
+  </form>
+</div>

@@ -1,8 +1,8 @@
 export enum Role {
-  admin,
-  adventurer,
-  customer,
-  registrar,
-  rankPromoter
+  Admin,
+  Adventurer,
+  Customer,
+  Registrar,
+  RankPromoter
 
 }

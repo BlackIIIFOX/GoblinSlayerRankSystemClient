@@ -9,7 +9,7 @@ import {JwtService} from './jwt.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class AccountService {
   private currentUserSubject = new BehaviorSubject<User>(undefined);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
@@ -20,14 +20,16 @@ export class UserService {
 
   // TODO: потом убрать
   private newUser: User = {
-    id: 2,
-    email: 'admin@gmail.com',
-    role: Role.admin,
-    token: 'token213213',
-    bio: 'bio admin',
-    name: 'Guild Girl',
+    user_address: 'Центральный город',
+    user_is_blocked: false,
+    user_name: 'BlackIIIFOX',
+    user_id: 2,
+    user_login: 'admin@gmail.com',
+    user_role: Role.Admin,
     image: 'https://funpay.ru/img/layout/avatar.png'
   };
+
+  // image: 'https://funpay.ru/img/layout/avatar.png'
 
   constructor(
     private http: HttpClient,
@@ -106,7 +108,7 @@ export class UserService {
       this.setAuth(this.newUser);
       return;
 
-      this.apiService.get('/user')
+      this.apiService.get('/account')
         .subscribe(
           data => this.setAuth(data.user),
           err => this.purgeAuth()
@@ -120,7 +122,7 @@ export class UserService {
   // Sett current user and isAuth flag.
   private setAuth(user: User) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
+    this.jwtService.saveToken('any token');
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true

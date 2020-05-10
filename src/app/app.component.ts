@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {UserService} from './core/services';
+import {AccountService} from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {UserService} from './core/services';
 export class AppComponent implements OnInit {
   title = 'GoblinSlayerRankSystemClient';
 
-  constructor(public router: Router, private userService: UserService) {
+  constructor(public router: Router, private userService: AccountService) {
   }
 
   ngOnInit(): void {

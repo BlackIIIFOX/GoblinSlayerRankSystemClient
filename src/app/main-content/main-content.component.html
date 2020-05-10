@@ -1,0 +1,10 @@
+<app-header></app-header>
+
+<div
+  [ngClass]="{'container-fluid p-0': true,
+      'mainFull': ['/login', '/register'].indexOf(router.url) > -1,
+      'mainMin': ['/login', '/register'].indexOf(router.url) === -1}">
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>

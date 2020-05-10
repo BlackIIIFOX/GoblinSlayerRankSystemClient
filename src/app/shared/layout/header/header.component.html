@@ -45,20 +45,20 @@
            role="button"
            routerLinkActive="active">
           <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" alt="user image"/>
-          <strong class="d-inline d-sm-none"> {{ currentUser.name }}</strong>
+          <strong class="d-inline d-sm-none"> {{ currentUser.user_name }}</strong>
         </a>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLogged">
 
-          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-inline d-sm-none" (click)="$event.preventDefault()">
+          <button routerLink="/users/{{currentUser.user_id}}" class="dropdown-item d-inline d-sm-none" (click)="$event.preventDefault()">
             Публичная страница
             <div class="d-none d-sm-block">
-              <strong class="d-block"> {{ currentUser.name }}</strong>
+              <strong class="d-block"> {{ currentUser.user_name }}</strong>
               <small class="d-block ml-1">Публичная страница</small>
             </div>
           </button>
 
-          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-none d-sm-block" (click)="$event.preventDefault()">
-              <strong class="d-block"> {{ currentUser.name }}</strong>
+          <button routerLink="/users/{{currentUser.user_id}}" class="dropdown-item d-none d-sm-block" (click)="$event.preventDefault()">
+              <strong class="d-block"> {{ currentUser.user_name }}</strong>
               <small class="d-block ml-1">Публичная страница</small>
           </button>
 
@@ -66,7 +66,7 @@
             Настройки
           </button>
 
-          <button *ngIf="currentUser.role === RoleEnum.admin" routerLink="/admin-panel" class="dropdown-item" (click)="$event.preventDefault()">
+          <button *ngIf="currentUser.user_role === RoleEnum.Admin" routerLink="/admin" class="dropdown-item" (click)="$event.preventDefault()">
             Панель администратора
           </button>
           <div class="dropdown-divider"></div>

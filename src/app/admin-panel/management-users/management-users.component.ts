@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {User} from '../../core/models';
-import {UsersService} from '../../core/services';
+import {ToastService, UsersService} from '../../core/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UserCreateComponent} from './user-create/user-create.component';
 import {UserUpdateComponent} from './user-update/user-update.component';
@@ -16,7 +16,9 @@ export class ManagementUsersComponent implements OnInit {
   users$: Observable<User[]>;
   total$: Observable<number>;
 
-  constructor(public service: UsersService, private modalService: NgbModal) {
+  constructor(public service: UsersService,
+              private toastService: ToastService,
+              private modalService: NgbModal) {
     this.users$ = this.service.entities$;
     this.total$ = service.total$;
   }
@@ -42,4 +44,15 @@ export class ManagementUsersComponent implements OnInit {
     });
   }
 
+  onBlockHandle(user: User) {
+    user.user_is_blocked = !user.user_is_blocked;
+
+    this.service.updateUser(user.user_id, user).subscribe(res => {
+      // this.service.refresh();
+      const result = user.user_is_blocked === true ? 'Пользователь заблокирован' : 'Пользователь разблокирован';
+      this.toastService.show('', result);
+    }, error => {
+      // TODO что то добавить
+    });
+  }
 }

@@ -69,12 +69,14 @@
           </td>
 
           <td class="align-middle">
-            {{user.user_is_blocked}}
+            <button type="button" class="btn btn-primary m-1" (click)="onBlockHandle(user)">
+              <i
+                [ngClass]="{'fas fa-user-lock': user.user_is_blocked, 'fa fa-user': !user.user_is_blocked}"></i>
+            </button>
           </td>
 
           <td class="align-middle">
-            <button type="button" class="btn btn-primary m-1" disabled><i class="far fa-eye"></i></button>
-            <button type="button" class="btn btn-success m-1" (click)="onEdit(user.user_id)"><i
+            <button type="button" class="btn btn-success m-1" disabled (click)="onEdit(user.user_id)"><i
               class="fas fa-edit"></i></button>
             <button type="button" class="btn btn-danger m-1" disabled><i class="far fa-trash-alt"></i></button>
           </td>

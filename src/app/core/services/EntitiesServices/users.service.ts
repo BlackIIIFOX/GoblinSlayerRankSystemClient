@@ -27,7 +27,7 @@ export class UsersService extends BaseEntityService<User> {
 
     const user1: User = {
       user_address: 'Центральный город',
-      user_is_blocked: false,
+      user_is_blocked: true,
       user_name: 'Пупкин Василий',
       user_id: 1,
       user_login: 'pupkin@gmail.com',
@@ -84,6 +84,11 @@ export class UsersService extends BaseEntityService<User> {
 
     return of(user);
     // return this.apiService.post('/users', newUser);
+  }
+
+  updateUser(id: number, info: User) {
+    return of(info);
+    // return this.apiService.put(`/users/${id}`, info);
   }
 
   // updateUser(id: number, info: UserUpdateInfo) {

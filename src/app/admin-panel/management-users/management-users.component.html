@@ -44,12 +44,40 @@
           <th scope="col">Full Name</th>
           <th scope="col">Role</th>
           <th scope="col">Blocked</th>
-          <th scope="col">Actions</th>
+          <th scope="col" class="actionCol">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of users$ | async">
           <th class="align-middle" scope="row">{{ user.user_id }}</th>
+
+          <td class="align-middle"><img class="mr-2" style="width: 50px"
+                                        [src]="user.image"
+                                        alt="Not found"/>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="user.user_login" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="user.user_name" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            <ngb-highlight [result]="user.user_role" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+
+          <td class="align-middle">
+            {{user.user_is_blocked}}
+          </td>
+
+          <td class="align-middle">
+            <button type="button" class="btn btn-primary m-1" disabled><i class="far fa-eye"></i></button>
+            <button type="button" class="btn btn-success m-1" (click)="onEdit(user.user_id)"><i
+              class="fas fa-edit"></i></button>
+            <button type="button" class="btn btn-danger m-1" disabled><i class="far fa-trash-alt"></i></button>
+          </td>
         </tr>
         </tbody>
       </table>

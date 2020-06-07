@@ -6,6 +6,7 @@ import {Md5} from 'ts-md5';
 import {delay} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import {Router} from '@angular/router';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-contractor-registration',
@@ -19,7 +20,10 @@ export class ContractorRegistrationComponent implements OnInit {
   userAlreadyExist = false;
   registrationForm: FormGroup;
 
-  constructor(private usersService: UsersService, private fb: FormBuilder, private router: Router, private toastService: ToastService) {
+  constructor(private usersService: UsersService,
+              private fb: FormBuilder,
+              private router: Router,
+              private toastService: ToastService) {
   }
 
   ngOnInit(): void {
@@ -56,7 +60,7 @@ export class ContractorRegistrationComponent implements OnInit {
     return this.registrationForm.get('address');
   }
 
-  submitForm() {
+  onSubmit() {
     this.submitted = true;
 
     // Если форма не валидна, то ждем пока ее поправит пользователь

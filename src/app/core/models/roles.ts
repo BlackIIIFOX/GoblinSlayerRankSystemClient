@@ -1,8 +1,7 @@
 export enum Role {
-  Admin,
-  Adventurer,
-  Customer,
-  Registrar,
-  RankPromoter
-
+  Admin= 'Admin',
+  Adventurer = 'Adventurer',
+  Customer = 'Customer',
+  Registrar = 'Registrar',
+  RankPromoter = 'RankPromoter'
 }

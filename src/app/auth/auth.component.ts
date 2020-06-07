@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {AccountService, Errors} from '../core';
 
@@ -9,12 +9,9 @@ import {AccountService, Errors} from '../core';
   templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit {
-  authType = '';
-  title = '';
   errors: Errors = {errors: {}};
   isSubmitting = false;
   authForm: FormGroup;
-  email: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,16 +27,6 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.url.subscribe(data => {
-      // Get the last piece of the URL (it's either 'login' or 'register')
-      this.authType = data[data.length - 1].path;
-      // Set a title for the page accordingly
-      this.title = (this.authType === 'login') ? 'Вход' : 'Регистрация';
-      // add form control for username if this is the register page
-      if (this.authType === 'register') {
-        this.authForm.addControl('username', new FormControl());
-      }
-    });
   }
 
   submitForm() {
@@ -48,24 +35,19 @@ export class AuthComponent implements OnInit {
 
     const credentials = this.authForm.value;
 
-    if (this.authType === 'login') {
-      this.userService
+    this.userService
       .logIn(credentials)
       .subscribe(
         data => this.router.navigateByUrl('/'),
         errors => {
-          this.errors = errors;
+          this.errors = {
+            errors: {
+              '': 'Такого пользователя не существует'
+            }
+          };
+          // this.errors = errors;
           this.isSubmitting = false;
         }
       );
-    } else {
-      this.userService.create(credentials).subscribe(
-        data => this.router.navigateByUrl('/'),
-        errors => {
-          this.errors = errors;
-          this.isSubmitting = false;
-        }
-      );
-    }
   }
 }

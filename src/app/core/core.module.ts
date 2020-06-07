@@ -9,7 +9,8 @@ import {
   JwtService,
   AccountService,
   AuthGuard,
-  UsersService
+  UsersService,
+  ToastService
 } from './services';
 
 @NgModule({
@@ -23,7 +24,8 @@ import {
     AccountService,
     ApiService,
     AuthGuard,
-    UsersService
+    UsersService,
+    ToastService
   ]
 })
 export class CoreModule {

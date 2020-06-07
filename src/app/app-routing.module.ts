@@ -6,23 +6,18 @@ import {MainContentComponent} from './main-content/main-content.component';
 import {AuthComponent} from './auth/auth.component';
 import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
+import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
-  {
-    path: 'login',
-    component: AuthComponent
-  },
-  {
-    path: 'register',
-    component: AuthComponent
-  },
   {
     path: 'content',
     component: MainContentComponent,
     children: [
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
-      {path: 'welcome', component: WelcomeComponent}
+      {path: 'welcome', component: WelcomeComponent},
+      {path: 'contractor-registration', component: ContractorRegistrationComponent},
+      {path: 'login', component: AuthComponent},
     ]
   },
   {

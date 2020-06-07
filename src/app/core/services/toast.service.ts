@@ -1,0 +1,19 @@
+import {Injectable, TemplateRef} from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ToastService {
+
+  toasts: any[] = [];
+
+  constructor() { }
+
+  show(header: string, body: string) {
+    this.toasts.push({ header, body });
+  }
+
+  remove(toast) {
+    this.toasts = this.toasts.filter(t => t !== toast);
+  }
+}

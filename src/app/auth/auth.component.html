@@ -1,22 +1,10 @@
-<div class="container-fluid" style="height: calc(100% - 56px)">
-  <div class="row justify-content-center align-items-center" style="height: calc(100% - 56px)">
+<div class="container-fluid pt-5 pb-5">
+  <div class="row justify-content-center align-items-center">
     <div class="col-md-4 col-xs-12">
-      <h1 class="text-center">{{ title }}</h1>
-      <p class="text-center">
-        <a [routerLink]="['/login']" *ngIf="authType == 'register'">Уже зарегистированы?</a>
-        <a [routerLink]="['/register']" *ngIf="authType == 'login'">Зарегистироваться?</a>
-      </p>
+      <h1 class="text-center">Авторизация</h1>
       <app-list-errors [errors]="errors"></app-list-errors>
       <form [formGroup]="authForm" (ngSubmit)="submitForm()">
         <fieldset [disabled]="isSubmitting">
-          <fieldset class="form-group">
-            <input
-              formControlName="username"
-              placeholder="Ваше имя"
-              class="form-control form-control-lg"
-              type="text"
-              *ngIf="authType == 'register'"/>
-          </fieldset>
           <fieldset class="form-group">
             <input
               name="email"
@@ -35,8 +23,8 @@
         </fieldset>
 
         <div class="text-center">
-          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">
-            {{ title }}
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid || isSubmitting" type="submit">
+            Войти
           </button>
         </div>
       </form>

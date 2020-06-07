@@ -35,15 +35,15 @@ export class UserCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const createInfo: Credentials = {
-      login: this.login.value,
-      password: (Md5.hashStr(this.password.value) as string)
-    };
-
-    this.usersService.createUser(createInfo).subscribe(() => {
-      this.activeModal.close('Created');
-    }, () => {
-      // TODO: надо что то показывать пользователю.
-    });
+    // const createInfo: Credentials = {
+    //   login: this.login.value,
+    //   password: (Md5.hashStr(this.password.value) as string)
+    // };
+    //
+    // this.usersService.createUser(createInfo).subscribe(() => {
+    //   this.activeModal.close('Created');
+    // }, () => {
+    //   // TODO: надо что то показывать пользователю.
+    // });
   }
 }

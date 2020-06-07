@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, of, ReplaySubject, throwError} from 'rxjs';
 import {Role, User} from '../models';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ApiService} from './api.service';
@@ -48,6 +48,8 @@ export class AccountService {
    * @return user data.
    */
   logIn(credentials): Observable<User> {
+    // return throwError(new Error('Херовые данные ты ввел братишка'));
+
     // TODO: убрать когда будет сервер.
     this.setAuth(this.newUser);
     return of(this.newUser);

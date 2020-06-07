@@ -23,6 +23,9 @@ import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {UserUpdateComponent} from './admin-panel/management-users/user-update/user-update.component';
 import {UserCreateComponent} from './admin-panel/management-users/user-create/user-create.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
+import { AdventurerRegistrationComponent } from './adventurer-registration/adventurer-registration.component';
+import { ContractorRegistrationComponent } from './contractor-registration/contractor-registration.component';
+import { ToastsComponent } from './toasts/toasts.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import {ManagementUsersComponent} from './admin-panel/management-users/managemen
     DashboardComponent,
     ManagementUsersComponent,
     UserUpdateComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    AdventurerRegistrationComponent,
+    ContractorRegistrationComponent,
+    ToastsComponent
   ],
   imports: [
     BrowserModule,

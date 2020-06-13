@@ -4,6 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Linked Repositories
 - [Server](https://github.com/paulrozhkin/the-contract-system-server)
+- [Modelio](https://github.com/paulrozhkin/the-contract-system-modelio)
 
 ## Development server
 

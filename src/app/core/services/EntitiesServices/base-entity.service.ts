@@ -17,6 +17,7 @@ export abstract class BaseEntityService<Entity> {
     ).subscribe(result => {
       this._entities$.next(result.entities);
       this._total$.next(result.total);
+    }, error => {
     });
 
     this._search$.next();

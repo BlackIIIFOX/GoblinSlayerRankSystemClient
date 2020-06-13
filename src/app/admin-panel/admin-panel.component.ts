@@ -15,7 +15,8 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   public pageRoute = '/admin';
   public currentUser: User;
 
-  constructor(private renderer: Renderer2, public router: Router, private userService: AccountService) { }
+  constructor(private renderer: Renderer2, public router: Router, private userService: AccountService) {
+  }
 
   ngOnInit(): void {
     this.adminPanelClasses.forEach(adminBodyClass => this.renderer.addClass(document.body, adminBodyClass));
@@ -25,6 +26,8 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
         if (userData) {
           this.currentUser = userData;
         }
+      }, error => {
+
       }
     );
   }

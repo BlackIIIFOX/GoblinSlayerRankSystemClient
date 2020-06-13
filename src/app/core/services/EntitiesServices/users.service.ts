@@ -69,7 +69,7 @@ export class UsersService extends BaseEntityService<User> {
 
   createUser(newUser: UserCreate) {
 
-    // return throwError(new Error('Пошел нах'));
+    // return throwError(new Error('Error'));
 
     // TODO: mock, потом убрать
     const user: User = {

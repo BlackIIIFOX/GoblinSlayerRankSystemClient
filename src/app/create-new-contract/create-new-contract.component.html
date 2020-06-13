@@ -1,1 +1,58 @@
-<p>create-new-contract works!</p>
+<div class="container-fluid pt-5 pb-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-4 col-xs-12">
+      <h1 class="text-center">Создание нового контракта</h1>
+      <form [formGroup]="newContractForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="contractName">Название</label>
+          <input type="text" class="form-control" id="contractName" [formControl]="name"
+                 [ngClass]="{ 'is-invalid': submitted && name.errors}">
+          <div *ngIf="submitted && name.errors" class="invalid-feedback">
+            <div *ngIf="name.errors.required">Введите название контракта</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Адрес</label>
+          <input type="text" class="form-control" id="address" [formControl]="address"
+                 [ngClass]="{ 'is-invalid': submitted && address.errors}">
+          <div *ngIf="submitted && address.errors" class="invalid-feedback">
+            <div *ngIf="address.errors.required">Введите адрес контракта</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reward">Оплата</label>
+          <input type="number" class="form-control" id="reward" [formControl]="reward"
+                 [ngClass]="{ 'is-invalid': submitted && reward.errors}">
+          <div *ngIf="submitted && reward.errors" class="invalid-feedback">
+            <div *ngIf="reward.errors.required">Введите вознаграждение</div>
+            <div *ngIf="reward.errors.min">Сумма вознаграждения не может быть меньше 0</div>
+            <div *ngIf="reward.errors.pattern">Сумма вознаграждения должна быть целым числом</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Описание контракта</label>
+          <textarea type="text" class="form-control" id="description" [formControl]="description"
+                    [ngClass]="{ 'is-invalid': submitted && reward.errors}" placeholder="Описание контракта"></textarea>
+          <div *ngIf="submitted && reward.errors" class="invalid-feedback">
+            <div *ngIf="description.errors.required">Введите описание контракта</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="comment">Комментарий к контракту</label>
+          <textarea type="text" class="form-control" id="comment" [formControl]="comment"
+                    placeholder="Ваш комментарий"></textarea>
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="submit">
+            Отправить заявку
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -26,6 +26,7 @@ import {ManagementUsersComponent} from './admin-panel/management-users/managemen
 import { AdventurerRegistrationComponent } from './adventurer-registration/adventurer-registration.component';
 import { ContractorRegistrationComponent } from './contractor-registration/contractor-registration.component';
 import { ToastsComponent } from './toasts/toasts.component';
+import { CreateNewContractComponent } from './create-new-contract/create-new-contract.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ToastsComponent } from './toasts/toasts.component';
     UserCreateComponent,
     AdventurerRegistrationComponent,
     ContractorRegistrationComponent,
-    ToastsComponent
+    ToastsComponent,
+    CreateNewContractComponent
   ],
   imports: [
     BrowserModule,

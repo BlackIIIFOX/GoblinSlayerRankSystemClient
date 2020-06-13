@@ -20,7 +20,7 @@
         <div class="form-group">
           <label for="fullName">ФИО</label>
           <input type="text" class="form-control" id="fullName" [formControl]="fullName"
-                 [ngClass]="{ 'is-invalid': submitted && email.errors }">
+                 [ngClass]="{ 'is-invalid': submitted && fullName.errors }">
           <div *ngIf="submitted && fullName.errors" class="invalid-feedback">
             <div *ngIf="fullName.errors.required">Введите ваши данные</div>
           </div>
@@ -29,9 +29,9 @@
         <div class="form-group">
           <label for="address">Адрес проживания</label>
           <input type="text" class="form-control" id="address" [formControl]="address"
-                 [ngClass]="{ 'is-invalid': submitted && email.errors }">
-          <div *ngIf="submitted && fullName.errors" class="invalid-feedback">
-            <div *ngIf="fullName.errors.required">Введите ваши данные</div>
+                 [ngClass]="{ 'is-invalid': submitted && address.errors }">
+          <div *ngIf="submitted && address.errors" class="invalid-feedback">
+            <div *ngIf="address.errors.required">Введите ваши данные</div>
           </div>
         </div>
 

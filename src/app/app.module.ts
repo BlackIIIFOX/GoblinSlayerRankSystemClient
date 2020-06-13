@@ -27,6 +27,7 @@ import { AdventurerRegistrationComponent } from './adventurer-registration/adven
 import { ContractorRegistrationComponent } from './contractor-registration/contractor-registration.component';
 import { ToastsComponent } from './toasts/toasts.component';
 import { CreateNewContractComponent } from './create-new-contract/create-new-contract.component';
+import { ListContractsComponent } from './list-contracts/list-contracts.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { CreateNewContractComponent } from './create-new-contract/create-new-con
     AdventurerRegistrationComponent,
     ContractorRegistrationComponent,
     ToastsComponent,
-    CreateNewContractComponent
+    CreateNewContractComponent,
+    ListContractsComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
 import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
+import {ListContractsComponent} from './list-contracts/list-contracts.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -19,7 +20,8 @@ const routes: Routes = [
       {path: 'welcome', component: WelcomeComponent},
       {path: 'contractor-registration', component: ContractorRegistrationComponent},
       {path: 'login', component: AuthComponent},
-      {path: 'create-new-contract', component: CreateNewContractComponent}
+      {path: 'create-new-contract', component: CreateNewContractComponent},
+      {path: 'contracts', component: ListContractsComponent}
     ]
   },
   {

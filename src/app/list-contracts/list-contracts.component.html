@@ -1,1 +1,24 @@
-<p>list-contracts works!</p>
+<div class="container mt-5 mb-5">
+  <h2>Контракты</h2>
+  <div class="row row-cols-1 row-cols-md-3 mt-3">
+    <div class="col mb-4" *ngFor="let contract of contracts$ | async">
+      <div class="card h-100">
+        <div class="bg-secondary d-flex align-items-center" style="height: 12rem">
+          <i class="fas fa-camera fa-7x text-center mx-auto"></i>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{contract.contract_name}}</h5>
+          <p class="card-text">{{contract.contract_description}}</p>
+        </div>
+
+        <a routerLink="./{{contract.contract_id}}" class="btn btn-primary mb-3 mx-5">Рассмотреть</a>
+
+        <div class="card-footer">
+          <small class="text-muted text-right">Время создания: {{contract.create_time | date}}</small>
+          <br>
+          <small class="text-muted text-right">Состояние: {{contract.contract_status | contractStatus}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

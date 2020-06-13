@@ -6,7 +6,6 @@ export * from './credentials.model';
 export * from './Pagination/search-result-pagination.model';
 export * from './Pagination/state-pagination.model';
 export * from './adventurer-status';
-export * from './adventurer-rank';
 export * from './user-create.model';
 export * from './ranks';
 export * from './contract-status';

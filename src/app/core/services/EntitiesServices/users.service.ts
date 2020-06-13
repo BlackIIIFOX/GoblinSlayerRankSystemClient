@@ -1,10 +1,6 @@
-import {Injectable, PipeTransform} from '@angular/core';
-import {
-  Credentials, Role,
-  SearchResultPagination,
-  User
-} from '../../models';
-import {Observable, of, throwError} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Rank, Role, SearchResultPagination, User} from '../../models';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {BaseEntityService} from './base-entity.service';
 import {UserCreate} from '../../models/user-create.model';
@@ -32,7 +28,7 @@ export class UsersService extends BaseEntityService<User> {
       user_id: 1,
       user_login: 'pupkin@gmail.com',
       user_role: Role.Adventurer,
-      image: 'https://funpay.ru/img/layout/avatar.png'
+      image: 'https://funpay.ru/img/layout/avatar.png',
     };
 
     const user2: User = {
@@ -42,7 +38,7 @@ export class UsersService extends BaseEntityService<User> {
       user_id: 2,
       user_login: 'admin@gmail.com',
       user_role: Role.Admin,
-      image: 'https://funpay.ru/img/layout/avatar.png'
+      image: 'https://funpay.ru/img/layout/avatar.png',
     };
 
 
@@ -79,7 +75,7 @@ export class UsersService extends BaseEntityService<User> {
       user_id: 1,
       user_login: newUser.user_login,
       user_role: newUser.user_role,
-      image: 'https://funpay.ru/img/layout/avatar.png'
+      image: 'https://funpay.ru/img/layout/avatar.png',
     };
 
     return of(user);

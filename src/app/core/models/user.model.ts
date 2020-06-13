@@ -1,4 +1,5 @@
 import {Role} from './roles';
+import {Rank} from './ranks';
 
 export interface User {
   user_id: number;

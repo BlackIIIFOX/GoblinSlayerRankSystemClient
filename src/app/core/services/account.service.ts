@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, of, ReplaySubject, throwError} from 'rxjs';
-import {Role, User} from '../models';
+import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
+import {Adventurer, AdventurerStatus, Rank, Role, User} from '../models';
 import {distinctUntilChanged, map} from 'rxjs/operators';
 import {ApiService} from './api.service';
 import {JwtService} from './jwt.service';
@@ -19,14 +19,27 @@ export class AccountService {
   private endpoint = '/users';
 
   // TODO: потом убрать
-  private newUser: User = {
+  // private newUser: User = {
+  //   user_address: 'Центральный город',
+  //   user_is_blocked: false,
+  //   user_name: 'BlackIIIFOX',
+  //   user_id: 2,
+  //   user_login: 'admin@gmail.com',
+  //   user_role: Role.Customer,
+  //   image: 'https://funpay.ru/img/layout/avatar.png',
+  // };
+
+  private newUser: Adventurer = {
     user_address: 'Центральный город',
     user_is_blocked: false,
     user_name: 'BlackIIIFOX',
     user_id: 2,
     user_login: 'admin@gmail.com',
-    user_role: Role.Customer,
-    image: 'https://funpay.ru/img/layout/avatar.png'
+    user_role: Role.Adventurer,
+    image: 'https://funpay.ru/img/layout/avatar.png',
+    adventurer_experience: 0,
+    adventurer_status: AdventurerStatus.Active,
+    rank_name: Rank.Obsidian
   };
 
   // image: 'https://funpay.ru/img/layout/avatar.png'

@@ -10,7 +10,7 @@
       <label for="exampleFormControlSelect1">Role</label>
       <select class="form-control" id="exampleFormControlSelect1" [formControl]="role"
               [ngClass]="{ 'is-invalid': submitted && role.errors}">
-        <option value="" selected disabled hidden>Нажмите выбора ролей</option>
+        <option value="" selected disabled hidden>Нажмите для выбора ролей</option>
         <option>{{RegistrarRoleName}}</option>
         <option>{{AdminRoleName}}</option>
         <option>{{RankPromoterRoleName}}</option>

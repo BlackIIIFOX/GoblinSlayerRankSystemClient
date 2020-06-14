@@ -10,3 +10,4 @@ export * from './user-create.model';
 export * from './ranks';
 export * from './contract-status';
 export * from './contract-create.model';
+export * from './contract-update.model';

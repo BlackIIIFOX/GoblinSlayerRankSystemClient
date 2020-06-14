@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BaseEntityService} from './base-entity.service';
 import {Contract} from '../../models/contract.model';
 import {Observable, of} from 'rxjs';
-import {ContractCreate, ContractStatus, Rank, SearchResultPagination} from '../../models';
+import {ContractCreate, ContractStatus, ContractUpdate, Rank, SearchResultPagination} from '../../models';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -140,5 +140,25 @@ export class ContractsService extends BaseEntityService<Contract> {
     return of(contract);
 
     // return this.apiService.post('/contracts', newContract);
+  }
+
+  updateContract(contractId: number, updateContract: ContractUpdate): Observable<Contract> {
+    // TODO: mock, потом убрать
+    const contract: Contract = {
+      comment_closed_contract: updateContract.comment_closed_contract,
+      comment_contract_request: updateContract.comment_contract_request,
+      contract_address: updateContract.contract_address,
+      contract_customer: updateContract.contract_customer,
+      contract_description: updateContract.contract_description,
+      contract_executor: updateContract.contract_executor,
+      contract_id: contractId,
+      contract_min_level: updateContract.contract_min_level,
+      contract_name: updateContract.contract_name,
+      contract_reward: updateContract.contract_reward,
+      contract_status: updateContract.contract_status,
+      create_time: '2020-06-13T22:10:00Z'
+    };
+
+    return of(contract);
   }
 }

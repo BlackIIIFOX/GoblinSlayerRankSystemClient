@@ -25,7 +25,7 @@ export class AccountService {
     user_name: 'BlackIIIFOX',
     user_id: 2,
     user_login: 'admin@gmail.com',
-    user_role: Role.Registrar,
+    user_role: Role.Customer,
     image: 'https://funpay.ru/img/layout/avatar.png',
   };
 

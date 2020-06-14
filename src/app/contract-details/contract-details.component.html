@@ -1,5 +1,84 @@
 <div class="container mt-5 mb-5">
-  <div *ngIf="contract$ | async as contract">
-    <p>{{contract.contract_id}}</p>
+  <h2>Детали контракта № {{contractId}}</h2>
+  <div *ngIf="contract">
+    <form [formGroup]="detailForm">
+      <div class="form-group">
+        <label for="contractName">Название</label>
+        <label class="form-control" id="contractName">{{contract.contract_name}}</label>
+      </div>
+
+      <div class="form-group">
+        <label for="contractDate">Дата создания</label>
+        <label class="form-control" id="contractDate">{{contract.create_time | date}}</label>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Адрес</label>
+        <label class="form-control" id="address">{{contract.contract_address}}</label>
+      </div>
+
+      <div class="form-group">
+        <label for="reward">Оплата</label>
+        <label class="form-control" id="reward">{{contract.contract_reward}}</label>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Описание контракта</label>
+        <textarea class="form-control" id="description" disabled>{{contract.contract_description}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Комментарий к контракту</label>
+        <textarea class="form-control" id="comment" disabled>{{contract.comment_contract_request}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="statusSelect">Статус контракта</label>
+        <select class="form-control" id="statusSelect" [formControl]="status"
+                [ngClass]="{ 'is-invalid': submitted && status.errors}">
+          <option value="" selected disabled hidden>Нажмите для выбора состояний</option>
+          <option *ngFor="let status of contractStatus" [value]="status">{{status | contractStatus}}</option>
+        </select>
+        <div *ngIf="submitted && status.errors" class="invalid-feedback">
+          <div *ngIf="status.errors.required">Выберите состояние контракта</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="minLevelSelect">Статус контракта</label>
+        <select class="form-control" id="minLevelSelect" [formControl]="minLevel"
+                [ngClass]="{ 'is-invalid': submitted && minLevel.errors}">
+          <option value="" selected disabled hidden>Нажмите для выбора ранга</option>
+          <option *ngFor="let rank of ranks" [value]="rank">{{rank | rank}}</option>
+        </select>
+        <div *ngIf="submitted && minLevel.errors" class="invalid-feedback">
+          <div *ngIf="minLevel.errors.required">Выберите состояние контракта</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="registrarComment">Комментарий регистратора</label>
+        <textarea class="form-control" id="registrarComment" [formGroup]="registrarComment" [disabled]="!isUserCanUpdateContract"></textarea>
+      </div>
+
+      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contract_status === contractStatusEnum.Filed" >
+        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
+                (click)="onReject()">
+          Отклонить
+        </button>
+
+        <button class="btn btn-lg btn-primary pull-xs-right ml-3" [disabled]="processing" type="button"
+                (click)="onAccept()">
+          Принять
+        </button>
+      </div>
+
+      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contract_status !== contractStatusEnum.Filed">
+        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
+                (click)="updateContract()">
+          Обновить
+        </button>
+      </div>
+    </form>
   </div>
 </div>

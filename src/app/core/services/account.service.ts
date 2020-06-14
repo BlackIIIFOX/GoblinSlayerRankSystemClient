@@ -19,28 +19,28 @@ export class AccountService {
   private endpoint = '/users';
 
   // TODO: потом убрать
-  // private newUser: User = {
-  //   user_address: 'Центральный город',
-  //   user_is_blocked: false,
-  //   user_name: 'BlackIIIFOX',
-  //   user_id: 2,
-  //   user_login: 'admin@gmail.com',
-  //   user_role: Role.Customer,
-  //   image: 'https://funpay.ru/img/layout/avatar.png',
-  // };
-
-  private newUser: Adventurer = {
+  private newUser: User = {
     user_address: 'Центральный город',
     user_is_blocked: false,
     user_name: 'BlackIIIFOX',
     user_id: 2,
     user_login: 'admin@gmail.com',
-    user_role: Role.Adventurer,
+    user_role: Role.Registrar,
     image: 'https://funpay.ru/img/layout/avatar.png',
-    adventurer_experience: 0,
-    adventurer_status: AdventurerStatus.Active,
-    rank_name: Rank.Obsidian
   };
+
+  // private newUser: Adventurer = {
+  //   user_address: 'Центральный город',
+  //   user_is_blocked: false,
+  //   user_name: 'BlackIIIFOX',
+  //   user_id: 2,
+  //   user_login: 'admin@gmail.com',
+  //   user_role: Role.Adventurer,
+  //   image: 'https://funpay.ru/img/layout/avatar.png',
+  //   adventurer_experience: 0,
+  //   adventurer_status: AdventurerStatus.Active,
+  //   rank_name: Rank.Obsidian
+  // };
 
   // image: 'https://funpay.ru/img/layout/avatar.png'
 

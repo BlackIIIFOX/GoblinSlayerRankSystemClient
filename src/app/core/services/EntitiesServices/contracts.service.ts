@@ -120,4 +120,25 @@ export class ContractsService extends BaseEntityService<Contract> {
     // return this.apiService.post('/contracts', newContract);
   }
 
+  getById(id: number) {
+    // TODO: mock, потом убрать
+    const contract: Contract = {
+      comment_closed_contract: '',
+      comment_contract_request: 'Комментарий 3',
+      contract_address: 'Адресс 1',
+      contract_customer: 1,
+      contract_description: 'Описание контракта 3. С длинным описанием. С длинным описанием. С длинным описанием. С длинным описанием.',
+      contract_executor: null,
+      contract_id: 3,
+      contract_min_level: Rank.Obsidian,
+      contract_name: 'Контракт 3. С длинным названием для теста',
+      contract_reward: 25555,
+      contract_status: ContractStatus.Filed,
+      create_time: '2020-06-13T23:10:00Z'
+    };
+
+    return of(contract);
+
+    // return this.apiService.post('/contracts', newContract);
+  }
 }

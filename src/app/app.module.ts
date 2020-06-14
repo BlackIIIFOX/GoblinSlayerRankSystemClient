@@ -28,6 +28,7 @@ import { ContractorRegistrationComponent } from './contractor-registration/contr
 import { ToastsComponent } from './toasts/toasts.component';
 import { CreateNewContractComponent } from './create-new-contract/create-new-contract.component';
 import { ListContractsComponent } from './list-contracts/list-contracts.component';
+import { ContractDetailsComponent } from './contract-details/contract-details.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ListContractsComponent } from './list-contracts/list-contracts.componen
     ContractorRegistrationComponent,
     ToastsComponent,
     CreateNewContractComponent,
-    ListContractsComponent
+    ListContractsComponent,
+    ContractDetailsComponent
   ],
   imports: [
     BrowserModule,

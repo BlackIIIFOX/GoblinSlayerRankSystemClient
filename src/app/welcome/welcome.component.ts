@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+import {AccountService} from '../core/services';
+import {User} from '../core/models';
 
 @Component({
   selector: 'app-welcome',
@@ -8,20 +10,22 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 export class WelcomeComponent implements OnInit {
 
-  // images = [1, 2, 3].map(() => `https://picsum.photos/1920/1080?random&t=${Math.random()}`);
   images = [
     './assets/img/welcome_test.jpg',
     './assets/img/welcome_test2.jpg',
     './assets/img/welcome_page_slider_squad.jpg'];
+  public currentUser: User;
 
-  constructor(config: NgbCarouselConfig) {
+  constructor(config: NgbCarouselConfig, public accountService: AccountService) {
     // customize default values of carousels used by this component tree
     config.interval = 10000;
     this.images[2] = './assets/img/welcome_test.jpg';
   }
 
   ngOnInit(): void {
-
+    this.accountService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
 }

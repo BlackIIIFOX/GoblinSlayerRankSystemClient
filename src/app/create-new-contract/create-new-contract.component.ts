@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AccountService, ToastService} from '../core/services';
-import {ContractsService} from '../core/services';
-import {ContractCreate, User} from '../core/models';
+import {AccountService, ContractsService, ToastService} from '../core/services';
+import {ContractCreate, ContractStatus, User} from '../core/models';
 
 @Component({
   selector: 'app-create-new-contract',
@@ -71,12 +70,13 @@ export class CreateNewContractComponent implements OnInit {
     }
 
     const newContract: ContractCreate = {
-      comment_contract_request: this.comment.value,
-      contract_address: this.address.value,
-      contract_customer: this.contractor.user_id,
-      contract_description: this.description.value,
-      contract_name: this.name.value,
-      contract_reward: this.reward.value
+      requestComment: this.comment.value,
+      address: this.address.value,
+      customer: this.contractor.id,
+      description: this.description.value,
+      nameContract: this.name.value,
+      reward: this.reward.value,
+      contractStatus: ContractStatus.Filed
     };
 
     this.processing = true;
@@ -84,7 +84,7 @@ export class CreateNewContractComponent implements OnInit {
     this.contractsService.createContract(newContract).subscribe(
       contract => {
         this.processing = false;
-        this.toastService.show('', `Контракт №${contract.contract_id} создан. Ожидайте подтвеждения`);
+        this.toastService.show('', `Контракт №${contract.id} создан. Ожидайте подтвеждения`);
         this.router.navigateByUrl('/');
       },
       error => {

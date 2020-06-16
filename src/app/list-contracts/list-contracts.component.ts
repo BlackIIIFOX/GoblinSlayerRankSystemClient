@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {Contract} from '../core/models/contract.model';
 import {Rank, Role, User} from '../core/models';
 import {map} from 'rxjs/operators';
-import {Adventurer} from '../core/models';
 
 @Component({
   selector: 'app-list-contracts',
@@ -21,11 +20,25 @@ export class ListContractsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.currentUser.subscribe(currentUser => {
+        if (!currentUser) {
+          console.error('currentUser is null');
+          return;
+        }
+
+        console.log('Current user: ' + currentUser.id);
+
         this.currentUser$ = currentUser;
 
-        if (this.currentUser$.user_role === Role.Adventurer) {
+        console.log('Id:' + currentUser.id);
+        this.contractsService.refresh();
+
+        if (this.currentUser$.role === Role.Adventurer) {
           this.contracts$ = this.contractsService.entities$.pipe(
-            map(contact => contact.filter(item => this.adventurerHasAccess(this.currentUser$, item.contract_min_level)))
+            map(contact => contact.filter(item => this.adventurerHasAccess(this.currentUser$, item.minRank)))
+          );
+        } else if (this.currentUser$.role === Role.Customer) {
+          this.contracts$ = this.contractsService.entities$.pipe(
+            map(contact => contact.filter(item => item.customer === this.currentUser$.id))
           );
         } else {
           this.contracts$ = this.contractsService.entities$;
@@ -40,13 +53,17 @@ export class ListContractsComponent implements OnInit {
    * @param contractRank ранг контракта.
    */
   private adventurerHasAccess(user: User, contractRank: Rank): boolean {
-    const adventurer = user as Adventurer;
+    let adventurer = null;
+
+    if (user.role === Role.Adventurer) {
+      adventurer = user;
+    }
 
     if (!adventurer) {
       return false;
     }
 
-    return this.getRankPriority(adventurer.rank_name) <= this.getRankPriority(contractRank);
+    return this.getRankPriority(adventurer.adventurerRank) <= this.getRankPriority(contractRank);
   }
 
 

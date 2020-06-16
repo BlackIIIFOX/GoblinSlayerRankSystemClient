@@ -45,11 +45,11 @@ export class ManagementUsersComponent implements OnInit {
   }
 
   onBlockHandle(user: User) {
-    user.user_is_blocked = !user.user_is_blocked;
+    user.blocked = !user.blocked;
 
-    this.service.updateUser(user.user_id, user).subscribe(res => {
+    this.service.updateUser(user.id, user).subscribe(res => {
       // this.service.refresh();
-      const result = user.user_is_blocked === true ? 'Пользователь заблокирован' : 'Пользователь разблокирован';
+      const result = user.blocked === true ? 'Пользователь заблокирован' : 'Пользователь разблокирован';
       this.toastService.show('', result);
     }, error => {
       // TODO что то добавить

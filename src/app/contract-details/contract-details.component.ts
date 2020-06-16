@@ -37,7 +37,7 @@ export class ContractDetailsComponent implements OnInit {
       user => {
         this.currentUser = user;
 
-        this.isUserCanUpdateContract = this.currentUser.user_role === Role.Registrar;
+        this.isUserCanUpdateContract = this.currentUser.role === Role.Registrar;
 
         if (!this.isUserCanUpdateContract) {
           this.detailForm?.disable();
@@ -63,15 +63,15 @@ export class ContractDetailsComponent implements OnInit {
     this.contract = contract;
 
     // const currentStatus = ContractStatus[];
-    const isContractFiled = contract.contract_status === ContractStatus.Filed;
+    const isContractFiled = contract.contractStatus === ContractStatus.Filed;
 
     this.status?.enable();
 
     this.detailForm = this.fb.group(
       {
-        minLevel: [this.contract.contract_min_level, Validators.required],
-        status: [this.contract.contract_status, Validators.required],
-        registrarComment: ['']
+        minLevel: [this.contract.minRank, Validators.required],
+        status: [this.contract.contractStatus, Validators.required],
+        registrarComment: [this.contract.registrarComment, Validators.required]
       });
 
     if (isContractFiled) {
@@ -96,27 +96,37 @@ export class ContractDetailsComponent implements OnInit {
   }
 
   onAccept() {
-    this.status.setValue(ContractStatus.Accepted);
-    this.updateContract();
+    this.updateContract(ContractStatus.Accepted);
   }
 
   onReject() {
-    this.status.setValue(ContractStatus.Rejected);
-    this.updateContract();
+    this.updateContract(ContractStatus.Rejected);
   }
 
-  updateContract() {
+  updateContract(newStatus: ContractStatus) {
+    this.submitted = true;
+
+    if (!this.detailForm.valid) {
+      return;
+    }
+
+    if (newStatus === null) {
+      newStatus = this.status.value;
+    }
+
     const updateInfo: ContractUpdate = {
-      comment_closed_contract: this.contract.comment_closed_contract,
-      comment_contract_request: this.contract.comment_contract_request,
-      contract_address: this.contract.contract_address,
-      contract_customer: this.contract.contract_customer,
-      contract_description: this.contract.contract_description,
-      contract_executor: this.contract.contract_executor,
-      contract_min_level: this.minLevel.value,
-      contract_name: this.contract.contract_name,
-      contract_reward: this.contract.contract_reward,
-      contract_status: this.status.value
+      createTime: this.contract.createTime,
+      registrarComment: this.registrarComment.value,
+      closedComment: this.contract.closedComment,
+      requestComment: this.contract.requestComment,
+      address: this.contract.address,
+      customer: this.contract.customer,
+      description: this.contract.description,
+      executor: this.contract.executor,
+      minRank: this.minLevel.value,
+      nameContract: this.contract.nameContract,
+      reward: this.contract.reward,
+      contractStatus: newStatus
     };
 
     this.contractsService.updateContract(this.contractId, updateInfo)

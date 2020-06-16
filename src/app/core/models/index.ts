@@ -1,5 +1,4 @@
 export * from './user.model';
-export * from './adventurer.model';
 export * from './error.model';
 export * from './roles';
 export * from './credentials.model';

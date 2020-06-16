@@ -49,7 +49,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let user of users$ | async">
-          <th class="align-middle" scope="row">{{ user.user_id }}</th>
+          <th class="align-middle" scope="row">{{ user.id }}</th>
 
           <td class="align-middle"><img class="mr-2" style="width: 50px"
                                         [src]="user.image"
@@ -57,26 +57,26 @@
           </td>
 
           <td class="align-middle">
-            <ngb-highlight [result]="user.user_login" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="user.login" [term]="service.searchTerm"></ngb-highlight>
           </td>
 
           <td class="align-middle">
-            <ngb-highlight [result]="user.user_name" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="user.name" [term]="service.searchTerm"></ngb-highlight>
           </td>
 
           <td class="align-middle">
-            <ngb-highlight [result]="user.user_role" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="user.role" [term]="service.searchTerm"></ngb-highlight>
           </td>
 
           <td class="align-middle">
             <button type="button" class="btn btn-primary m-1" (click)="onBlockHandle(user)">
               <i
-                [ngClass]="{'fas fa-user-lock': user.user_is_blocked, 'fa fa-user': !user.user_is_blocked}"></i>
+                [ngClass]="{'fas fa-user-lock': user.blocked, 'fa fa-user': !user.blocked}"></i>
             </button>
           </td>
 
           <td class="align-middle">
-            <button type="button" class="btn btn-success m-1" disabled (click)="onEdit(user.user_id)"><i
+            <button type="button" class="btn btn-success m-1" disabled (click)="onEdit(user.id)"><i
               class="fas fa-edit"></i></button>
             <button type="button" class="btn btn-danger m-1" disabled><i class="far fa-trash-alt"></i></button>
           </td>

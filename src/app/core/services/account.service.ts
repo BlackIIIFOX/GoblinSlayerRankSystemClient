@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
-import {Adventurer, AdventurerStatus, Rank, Role, User} from '../models';
-import {distinctUntilChanged, map} from 'rxjs/operators';
+import {Role, User} from '../models';
+import {distinctUntilChanged, flatMap, map} from 'rxjs/operators';
 import {ApiService} from './api.service';
 import {JwtService} from './jwt.service';
 
@@ -17,32 +17,6 @@ export class AccountService {
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
   private endpoint = '/users';
-
-  // TODO: потом убрать
-  private newUser: User = {
-    user_address: 'Центральный город',
-    user_is_blocked: false,
-    user_name: 'BlackIIIFOX',
-    user_id: 2,
-    user_login: 'admin@gmail.com',
-    user_role: Role.Customer,
-    image: 'https://funpay.ru/img/layout/avatar.png',
-  };
-
-  // private newUser: Adventurer = {
-  //   user_address: 'Центральный город',
-  //   user_is_blocked: false,
-  //   user_name: 'BlackIIIFOX',
-  //   user_id: 2,
-  //   user_login: 'admin@gmail.com',
-  //   user_role: Role.Adventurer,
-  //   image: 'https://funpay.ru/img/layout/avatar.png',
-  //   adventurer_experience: 0,
-  //   adventurer_status: AdventurerStatus.Active,
-  //   rank_name: Rank.Obsidian
-  // };
-
-  // image: 'https://funpay.ru/img/layout/avatar.png'
 
   constructor(
     private http: HttpClient,
@@ -61,17 +35,22 @@ export class AccountService {
    * @return user data.
    */
   logIn(credentials): Observable<User> {
-    // return throwError(new Error('Херовые данные ты ввел братишка'));
-
-    // TODO: убрать когда будет сервер.
-    this.setAuth(this.newUser);
-    return of(this.newUser);
-
-    return this.apiService.post(`${this.endpoint}/login`, credentials)
-      .pipe(map(
+    return this.apiService.post(`/auth/login`, credentials)
+      .pipe(flatMap(
         data => {
-          this.setAuth(data.user);
-          return data;
+          this.setAuth(data.access_token, null);
+          return this.apiService.get('/account').pipe(
+            map(user => {
+              if (user.blocked) {
+                this.purgeAuth();
+                throw new Error('You are blocked');
+              } else {
+                this.setAuth(data.access_token, user);
+              }
+
+              return user;
+            })
+          );
         }
       ));
   }
@@ -83,49 +62,19 @@ export class AccountService {
     this.purgeAuth();
   }
 
-  /**
-   * Create new user.
-   * @param credentials login and password for registration.
-   * @return new user data.
-   */
-  create(credentials): Observable<User> {
-    // TODO: убрать когда будет сервер.
-    this.setAuth(this.newUser);
-    return of(this.newUser);
-
-    return this.apiService.post(`${this.endpoint}`, credentials)
-      .pipe(map(
-        data => {
-          this.setAuth(data.user);
-          return data;
-        }
-      ));
-  }
-
-
-  // Update the user on the server (email, pass, etc)
-  update(user): Observable<User> {
-    return this.apiService
-      .put(this.endpoint, {user})
-      .pipe(map(data => {
-        // Update the currentUser observable
-        this.currentUserSubject.next(data.user);
-        return data.user;
-      }));
-  }
-
   // Verify JWT in localstorage with server & load user's info.
   // This runs once on application startup.
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
-      // TODO: потом убрать
-      this.setAuth(this.newUser);
-      return;
 
       this.apiService.get('/account')
         .subscribe(
-          data => this.setAuth(data.user),
+          user => {
+            if (!user.blocked) {
+              this.setAuth(this.jwtService.getToken(), user);
+            }
+          },
           err => this.purgeAuth()
         );
     } else {
@@ -135,13 +84,14 @@ export class AccountService {
   }
 
   // Sett current user and isAuth flag.
-  private setAuth(user: User) {
+  private setAuth(token: string, user: User) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken('any token');
+    this.jwtService.saveToken(token);
     // Set current user data into observable
     this.currentUserSubject.next(user);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
+    console.log('User login');
   }
 
   // Purge current user and drop isAuth flag.
@@ -152,19 +102,6 @@ export class AccountService {
     this.currentUserSubject.next(undefined);
     // Set auth status to false
     this.isAuthenticatedSubject.next(false);
+    console.log('User logon');
   }
-
-  // TODO: перенести в UsersService.
-  /*
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
-  }
-
-  public getUser(id: number): Observable<User> {
-    return this.http.get<User>(`${this.usersUrl}/${id}`);
-  }
-
-  public save(user: User) {
-    return this.http.post<User>(this.usersUrl, user);
-  }*/
 }

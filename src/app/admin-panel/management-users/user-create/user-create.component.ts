@@ -78,11 +78,11 @@ export class UserCreateComponent implements OnInit {
     this.processing = true;
 
     const newContractor: UserCreate = {
-      user_address: this.address.value,
-      user_login: this.email.value,
-      user_name: this.fullName.value,
-      user_password: (Md5.hashStr(this.password.value) as string),
-      user_role: this.stringToRoleConverter(this.role.value)
+      address: this.address.value,
+      login: this.email.value,
+      name: this.fullName.value,
+      password: (Md5.hashStr(this.password.value) as string),
+      role: this.stringToRoleConverter(this.role.value)
     };
 
     this.usersService.createUser(newContractor)
@@ -91,7 +91,13 @@ export class UserCreateComponent implements OnInit {
         this.toastService.show('', 'Пользователь создан.');
         this.activeModal.close('Created');
       }, error => {
-        this.userAlreadyExist = true;
+        if (error.status) {
+          console.log(error.status);
+          this.userAlreadyExist = true;
+        } else {
+          this.toastService.show('Ошибка', 'Ошибка создания пользователя');
+        }
+
         this.processing = false;
       });
   }

@@ -23,12 +23,12 @@ import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {UserUpdateComponent} from './admin-panel/management-users/user-update/user-update.component';
 import {UserCreateComponent} from './admin-panel/management-users/user-create/user-create.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
-import { AdventurerRegistrationComponent } from './adventurer-registration/adventurer-registration.component';
-import { ContractorRegistrationComponent } from './contractor-registration/contractor-registration.component';
-import { ToastsComponent } from './toasts/toasts.component';
-import { CreateNewContractComponent } from './create-new-contract/create-new-contract.component';
-import { ListContractsComponent } from './list-contracts/list-contracts.component';
-import { ContractDetailsComponent } from './contract-details/contract-details.component';
+import {AdventurerRegistrationComponent} from './adventurer-registration/adventurer-registration.component';
+import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
+import {ToastsComponent} from './toasts/toasts.component';
+import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
+import {ListContractsComponent} from './list-contracts/list-contracts.component';
+import {ContractDetailsComponent} from './contract-details/contract-details.component';
 
 @NgModule({
   declarations: [
@@ -57,16 +57,7 @@ import { ContractDetailsComponent } from './contract-details/contract-details.co
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule,
     ReactiveFormsModule,
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemUserDataService, {dataEncapsulation: false}
-    ),
-
     NgbModule
   ],
   providers: [],

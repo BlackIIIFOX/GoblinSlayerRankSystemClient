@@ -71,11 +71,11 @@ export class ContractorRegistrationComponent implements OnInit {
     this.processing = true;
 
     const newContractor: UserCreate = {
-      user_address: this.address.value,
-      user_login: this.email.value,
-      user_name: this.fullName.value,
-      user_password: (Md5.hashStr(this.password.value) as string),
-      user_role: Role.Customer
+      address: this.address.value,
+      login: this.email.value,
+      name: this.fullName.value,
+      password: (Md5.hashStr(this.password.value) as string),
+      role: Role.Customer
     };
 
     this.usersService.createUser(newContractor)
@@ -84,7 +84,12 @@ export class ContractorRegistrationComponent implements OnInit {
         this.toastService.show('', 'Вы зарегистрированы, выполните авторизацию.');
         this.router.navigateByUrl('/');
       }, error => {
-        this.userAlreadyExist = true;
+        if (error.status === 400) {
+          this.userAlreadyExist = true;
+        } else {
+          this.toastService.show('Ошибка', 'Критическая ошибка на сервере.');
+        }
+
         this.processing = false;
       });
   }

@@ -18,11 +18,11 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    /*stage('Test') {
       steps {
         sh 'npm run-script test'
       }
-    }
+    }*/
 
     stage('Deploy') {
       steps {

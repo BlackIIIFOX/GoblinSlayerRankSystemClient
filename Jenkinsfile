@@ -38,7 +38,7 @@ pipeline {
           sh 'ssh -o StrictHostKeyChecking=no -l jenkins paulrozhkin.ru uname -a'
 
           // Copy jar file
-          sh 'scp ./dist/the-contract-system-web-client/* jenkins@paulrozhkin.ru:/var/www/the-contract-system/client'
+          sh 'scp -r ./dist/the-contract-system-web-client/* jenkins@paulrozhkin.ru:/var/www/the-contract-system/client'
         }
       }
     }

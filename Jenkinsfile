@@ -31,6 +31,10 @@ pipeline {
     }
 
     stage('Deploy') {
+      when {
+        branch 'master'
+      }
+
       agent { label 'master' }
 
       steps {

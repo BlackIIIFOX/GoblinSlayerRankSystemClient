@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  api_url: 'http://paulrozhkin.ru:3464/api'
 };

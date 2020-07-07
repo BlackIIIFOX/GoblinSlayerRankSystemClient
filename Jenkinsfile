@@ -1,32 +1,42 @@
 pipeline {
-  agent {
-    docker {
-      image 'node:10-alpine'
-    }
-
-  }
+  
   stages {
-    stage('Restore') {
-      steps {
-        sh 'npm install'
+    stage ('Build and test the project') {
+      agent {
+          docker {
+            image 'node:10-alpine'
+          }
       }
-    }
 
-    stage('Build') {
-      steps {
-        sh 'npm run-script build --prod'
+      stage('Restore') {
+        steps {
+          sh 'npm install'
+        }
       }
-    }
 
-    /*stage('Test') {
-      steps {
-        sh 'npm run-script test'
+      stage('Build') {
+        steps {
+          sh 'npm run-script build --prod'
+        }
       }
-    }*/
+
+      /*stage('Test') {
+        steps {
+          sh 'npm run-script test'
+        }
+      }*/
+    }
 
     stage('Deploy') {
+      agent { label 'master' }
+
       steps {
-        sh 'echo "deploy"'
+        sshagent (credentials: ['github-ssh-key-pipeline']) {
+          sh 'ssh -o StrictHostKeyChecking=no -l jenkins paulrozhkin.ru uname -a'
+
+          // Copy jar file
+          sh 'scp ./dist/the-contract-system-web-client/* jenkins@paulrozhkin.ru:/var/www/the-contract-system/client'
+        }
       }
     }
 

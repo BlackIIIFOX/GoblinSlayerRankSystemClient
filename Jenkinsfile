@@ -1,4 +1,5 @@
 pipeline {
+  agent none
   
   stages {
     stage ('Build and test the project') {
@@ -8,23 +9,25 @@ pipeline {
           }
       }
 
-      stage('Restore') {
-        steps {
-          sh 'npm install'
+      stages {
+        stage('Restore') {
+          steps {
+            sh 'npm install'
+          }
         }
-      }
 
-      stage('Build') {
-        steps {
-          sh 'npm run-script build --prod'
+        stage('Build') {
+          steps {
+            sh 'npm run-script build --prod'
+          }
         }
-      }
 
-      /*stage('Test') {
-        steps {
-          sh 'npm run-script test'
-        }
-      }*/
+        /*stage('Test') {
+          steps {
+            sh 'npm run-script test'
+          }
+        }*/
+      }
     }
 
     stage('Deploy') {

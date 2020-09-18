@@ -2,7 +2,7 @@ import {DecimalPipe} from '@angular/common';
 import {ApiService} from '../api.service';
 import {map, switchMap, tap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
-import {SearchResultPagination, StatePagination} from '../../models';
+import {Items, SearchResultPagination, StatePagination} from '../../models';
 import {Injectable} from '@angular/core';
 
 @Injectable({
@@ -47,12 +47,8 @@ export abstract class BaseEntityService<Entity> {
     this._set({pageSize});
   }
 
-  get searchTerm() {
-    return this.state.searchTerm;
-  }
-
-  set searchTerm(searchTerm: string) {
-    this._set({searchTerm});
+  get searchFilter() {
+    return this.state.searchFilter;
   }
 
   get entities$() {
@@ -71,7 +67,7 @@ export abstract class BaseEntityService<Entity> {
   protected state: StatePagination = {
     page: 1,
     pageSize: 10,
-    searchTerm: ''
+    searchFilter: new Map<string, string>()
   };
 
   protected abstract matches(restaurant: Entity, term: string): boolean;
@@ -79,15 +75,22 @@ export abstract class BaseEntityService<Entity> {
   protected abstract search(): Observable<SearchResultPagination<Entity>>;
 
   protected getAll(endpointGetAll: string): Observable<SearchResultPagination<Entity>> {
-    const {pageSize, page, searchTerm} = this.state;
+    const {pageSize, page, searchFilter} = this.state;
 
-    // TODO: need normal pagination on the server.
-    return this.apiService.get(endpointGetAll).pipe(
+    let filers = '';
+
+    searchFilter.forEach((value: string, key: string) => {
+      if (!!value && value.trim().length > 0) {
+        filers += `&${key}=${value.trim()}`;
+      }
+    });
+
+    const finalEndpoint = `${endpointGetAll}?size=${pageSize}&page=${page - 1}${filers}`;
+
+    return this.apiService.get(finalEndpoint).pipe(
       map(
-        entityMap => ({
-          entities: entityMap.filter(
-            entity => this.matches(entity, searchTerm)
-          ).slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize), total: entityMap.length
+        (items: Items<Entity>) => ({
+          entities: items.items, total: items.totalItems
         } as SearchResultPagination<Entity>)
       )
     );

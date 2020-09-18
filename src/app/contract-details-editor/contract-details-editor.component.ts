@@ -7,11 +7,11 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {ContractStatus, ContractUpdate, Rank, Role, User} from '../core/models';
 
 @Component({
-  selector: 'app-contract-details',
-  templateUrl: './contract-details.component.html',
-  styleUrls: ['./contract-details.component.css']
+  selector: 'app-contract-details-editor',
+  templateUrl: './contract-details-editor.component.html',
+  styleUrls: ['./contract-details-editor.component.css']
 })
-export class ContractDetailsComponent implements OnInit {
+export class ContractDetailsEditorComponent implements OnInit {
 
   public contract: Contract;
   public contractId: number;
@@ -37,7 +37,7 @@ export class ContractDetailsComponent implements OnInit {
       user => {
         this.currentUser = user;
 
-        this.isUserCanUpdateContract = this.currentUser.role === Role.Registrar;
+        this.isUserCanUpdateContract = this.currentUser.roles.includes(Role.Registrar);
 
         if (!this.isUserCanUpdateContract) {
           this.detailForm?.disable();
@@ -63,7 +63,7 @@ export class ContractDetailsComponent implements OnInit {
     this.contract = contract;
 
     // const currentStatus = ContractStatus[];
-    const isContractFiled = contract.contractStatus === ContractStatus.Filed;
+    const isContractCreated = contract.contractStatus === ContractStatus.Created;
 
     this.status?.enable();
 
@@ -74,7 +74,7 @@ export class ContractDetailsComponent implements OnInit {
         registrarComment: [this.contract.registrarComment, Validators.required]
       });
 
-    if (isContractFiled) {
+    if (isContractCreated) {
       this.status.disable();
     }
 
@@ -96,7 +96,7 @@ export class ContractDetailsComponent implements OnInit {
   }
 
   onAccept() {
-    this.updateContract(ContractStatus.Accepted);
+    this.updateContract(ContractStatus.Payment);
   }
 
   onReject() {
@@ -115,16 +115,12 @@ export class ContractDetailsComponent implements OnInit {
     }
 
     const updateInfo: ContractUpdate = {
-      createTime: this.contract.createTime,
       registrarComment: this.registrarComment.value,
-      closedComment: this.contract.closedComment,
       requestComment: this.contract.requestComment,
       address: this.contract.address,
-      customer: this.contract.customer,
       description: this.contract.description,
       executor: this.contract.executor,
       minRank: this.minLevel.value,
-      nameContract: this.contract.nameContract,
       reward: this.contract.reward,
       contractStatus: newStatus
     };

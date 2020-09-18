@@ -75,8 +75,7 @@ export class CreateNewContractComponent implements OnInit {
       customer: this.contractor.id,
       description: this.description.value,
       nameContract: this.name.value,
-      reward: this.reward.value,
-      contractStatus: ContractStatus.Filed
+      reward: this.reward.value
     };
 
     this.processing = true;

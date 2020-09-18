@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService, UsersService} from '../core/services';
-import {Role, UserCreate} from '../core/models';
+import {Role, CustomerCreate} from '../core/models';
 import {Md5} from 'ts-md5';
 import {delay} from 'rxjs/operators';
 import {throwError} from 'rxjs';
@@ -70,15 +70,14 @@ export class ContractorRegistrationComponent implements OnInit {
 
     this.processing = true;
 
-    const newContractor: UserCreate = {
+    const newContractor: CustomerCreate = {
       address: this.address.value,
-      login: this.email.value,
+      username: this.email.value,
       name: this.fullName.value,
-      password: (Md5.hashStr(this.password.value) as string),
-      role: Role.Customer
+      password: this.password.value
     };
 
-    this.usersService.createUser(newContractor)
+    this.usersService.createCustomer(newContractor)
       .subscribe(newUser => {
         this.processing = false;
         this.toastService.show('', 'Вы зарегистрированы, выполните авторизацию.');

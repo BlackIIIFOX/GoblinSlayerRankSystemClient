@@ -25,7 +25,7 @@
           Full text search:
           <label>
             <input class="form-control ml-2" type="text" name="searchTerm"
-                   [(ngModel)]="service.searchTerm"/>
+                   [(ngModel)]="usernameFilter"/>
           </label>
           <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
         </div>
@@ -39,8 +39,7 @@
         <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Avatar</th>
-          <th scope="col">Login</th>
+          <th scope="col">Username</th>
           <th scope="col">Full Name</th>
           <th scope="col">Role</th>
           <th scope="col">Blocked</th>
@@ -51,34 +50,28 @@
         <tr *ngFor="let user of users$ | async">
           <th class="align-middle" scope="row">{{ user.id }}</th>
 
-          <td class="align-middle"><img class="mr-2" style="width: 50px"
-                                        [src]="user.image"
-                                        alt="Not found"/>
+          <td class="align-middle">
+            <ngb-highlight [result]="user.username" [term]="service.searchFilter"></ngb-highlight>
           </td>
 
           <td class="align-middle">
-            <ngb-highlight [result]="user.login" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="user.name" [term]="service.searchFilter"></ngb-highlight>
           </td>
 
           <td class="align-middle">
-            <ngb-highlight [result]="user.name" [term]="service.searchTerm"></ngb-highlight>
-          </td>
-
-          <td class="align-middle">
-            <ngb-highlight [result]="user.role" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="user.roles.toString()"></ngb-highlight>
           </td>
 
           <td class="align-middle">
             <button type="button" class="btn btn-primary m-1" (click)="onBlockHandle(user)">
               <i
-                [ngClass]="{'fas fa-user-lock': user.blocked, 'fa fa-user': !user.blocked}"></i>
+                [ngClass]="{'fas fa-user-lock': user.isBlocked, 'fa fa-user': !user.isBlocked}"></i>
             </button>
           </td>
 
           <td class="align-middle">
             <button type="button" class="btn btn-success m-1" disabled (click)="onEdit(user.id)"><i
               class="fas fa-edit"></i></button>
-            <button type="button" class="btn btn-danger m-1" disabled><i class="far fa-trash-alt"></i></button>
           </td>
         </tr>
         </tbody>

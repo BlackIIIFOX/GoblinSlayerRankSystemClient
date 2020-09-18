@@ -1,9 +1,9 @@
 import {Role} from './roles';
 
-export interface UserCreate {
-  login: string;
+export interface AdminCreate {
+  username: string;
   password: string;
   name: string;
   address: string;
-  role: Role;
+  roles: Array<Role>;
 }

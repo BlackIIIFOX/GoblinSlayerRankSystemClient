@@ -1,8 +1,10 @@
 export enum ContractStatus {
-  Filed = 'Filed',
-  OnProcessing = 'OnProcessing',
+  Created = 'Created',
   Rejected = 'Rejected',
+  Payment = 'Payment',
   Accepted = 'Accepted',
+  Performing = 'Performing',
   Performed = 'Performed',
+  Payout = 'Payout',
   Completed = 'Completed'
 }

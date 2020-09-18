@@ -35,17 +35,17 @@ export class AccountService {
    * @return user data.
    */
   logIn(credentials): Observable<User> {
-    return this.apiService.post(`/auth/login`, credentials)
+    return this.apiService.post(`/auth/`, credentials)
       .pipe(flatMap(
         data => {
-          this.setAuth(data.access_token, null);
-          return this.apiService.get('/account').pipe(
+          this.setAuth(data.token, null);
+          return this.apiService.get('/account/').pipe(
             map(user => {
               if (user.blocked) {
                 this.purgeAuth();
                 throw new Error('You are blocked');
               } else {
-                this.setAuth(data.access_token, user);
+                this.setAuth(data.token, user);
               }
 
               return user;
@@ -68,7 +68,7 @@ export class AccountService {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
 
-      this.apiService.get('/account')
+      this.apiService.get('/account/')
         .subscribe(
           user => {
             if (!user.blocked) {

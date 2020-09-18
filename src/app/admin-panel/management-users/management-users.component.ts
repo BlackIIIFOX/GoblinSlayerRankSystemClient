@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {User} from '../../core/models';
+import {User, UserUpdate} from '../../core/models';
 import {ToastService, UsersService} from '../../core/services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UserCreateComponent} from './user-create/user-create.component';
@@ -15,6 +15,18 @@ export class ManagementUsersComponent implements OnInit {
 
   users$: Observable<User[]>;
   total$: Observable<number>;
+  // tslint:disable-next-line:variable-name
+  _usernameFilter: string;
+
+  set usernameFilter(value: string) {
+    this._usernameFilter = value;
+    this.service.searchFilter.set('username', value);
+    this.service.refresh();
+  }
+
+  get usernameFilter(): string {
+    return this._usernameFilter;
+  }
 
   constructor(public service: UsersService,
               private toastService: ToastService,
@@ -45,14 +57,17 @@ export class ManagementUsersComponent implements OnInit {
   }
 
   onBlockHandle(user: User) {
-    user.blocked = !user.blocked;
+    const updateInfo: UserUpdate = {
+      address: user.address, isBlocked: !user.isBlocked, name: user.name, roles: user.roles
+    };
 
-    this.service.updateUser(user.id, user).subscribe(res => {
+    this.service.updateUser(user.id, updateInfo).subscribe(res => {
       // this.service.refresh();
-      const result = user.blocked === true ? 'Пользователь заблокирован' : 'Пользователь разблокирован';
+      const result = res.isBlocked === true ? 'Пользователь заблокирован' : 'Пользователь разблокирован';
       this.toastService.show('', result);
+      user.isBlocked = res.isBlocked;
     }, error => {
-      // TODO что то добавить
+      this.toastService.show('', 'Ошибка блокировки');
     });
   }
 }

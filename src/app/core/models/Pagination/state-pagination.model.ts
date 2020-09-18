@@ -1,5 +1,5 @@
 export interface StatePagination {
   page: number;
   pageSize: number;
-  searchTerm: string;
+  searchFilter: Map<string, string>;
 }

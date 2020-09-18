@@ -43,8 +43,8 @@ export class AuthComponent implements OnInit {
     this.errors = {errors: {}};
 
     const credentials = {
-      login: this.email.value,
-      password: (Md5.hashStr(this.password.value) as string)
+      username: this.email.value,
+      password: this.password.value
     };
 
     this.userService

@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contractStatus === contractStatusEnum.Filed">
+      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contractStatus === contractStatusEnum.Created">
         <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
                 (click)="onReject()">
           Отклонить
@@ -79,7 +79,7 @@
         </button>
       </div>
 
-      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contractStatus !== contractStatusEnum.Filed">
+      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contractStatus !== contractStatusEnum.Created">
         <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
                 (click)="updateContract(null)">
           Обновить

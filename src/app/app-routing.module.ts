@@ -8,8 +8,9 @@ import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
 import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
-import {ListContractsComponent} from './list-contracts/list-contracts.component';
-import {ContractDetailsComponent} from './contract-details/contract-details.component';
+import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
+import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
+import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -22,8 +23,10 @@ const routes: Routes = [
       {path: 'contractor-registration', component: ContractorRegistrationComponent},
       {path: 'login', component: AuthComponent},
       {path: 'create-new-contract', component: CreateNewContractComponent},
-      {path: 'contracts', component: ListContractsComponent},
-      {path: 'contracts/:id', component: ContractDetailsComponent}
+      {path: 'my-contracts', component: MyListContractsComponent},
+      {path: 'contracts', component: AllListContractsComponent},
+      {path: 'contracts/:id', component: ContractDetailsEditorComponent},
+      {path: 'my-contracts/:id', component: ContractDetailsEditorComponent}
     ]
   },
   {

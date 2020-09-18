@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Rank, Role, SearchResultPagination, User} from '../../models';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {SearchResultPagination, User, CustomerCreate, AdminCreate, AdventurerCreate, UserUpdate} from '../../models';
+import {Observable} from 'rxjs';
 import {BaseEntityService} from './base-entity.service';
-import {UserCreate} from '../../models/user-create.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +9,31 @@ import {UserCreate} from '../../models/user-create.model';
 export class UsersService extends BaseEntityService<User> {
 
   protected matches(user: User, term: string): boolean {
-    return user.login.toLowerCase().includes(term.toLowerCase())
-      || user.name?.toLowerCase().includes(term.toLowerCase())
-      || user.role.toString().toLowerCase().includes(term.toLowerCase());
+    return user.username.toLowerCase().includes(term.toLowerCase())
+      || user.name?.toLowerCase().includes(term.toLowerCase());
   }
 
   protected search(): Observable<SearchResultPagination<User>> {
-    return this.getAll('/users');
+    return this.getAll('/admin/users/');
   }
 
   getById(id: number) {
     return this.apiService.get(`/users/${id}`);
   }
 
-  createUser(newUser: UserCreate) {
-    return this.apiService.post('/users', newUser);
+  createCustomer(newUser: CustomerCreate) {
+    return this.apiService.post('/users/', newUser);
   }
 
-  updateUser(id: number, info: User) {
-    return this.apiService.put(`/users/${id}`, info);
+  createAdventurer(newUser: AdventurerCreate) {
+    return this.apiService.post('/adventurers/', newUser);
+  }
+
+  createUser(newUser: AdminCreate) {
+    return this.apiService.post('/admin/users/', newUser);
+  }
+
+  updateUser(id: number, info: UserUpdate) {
+    return this.apiService.put(`/admin/users/${id}`, info);
   }
 }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastService, UsersService} from '../../../core/services';
-import {Role, UserCreate} from '../../../core/models';
+import {Role, AdminCreate} from '../../../core/models';
 import {Md5} from 'ts-md5';
 import {Router} from '@angular/router';
 
@@ -77,12 +77,12 @@ export class UserCreateComponent implements OnInit {
 
     this.processing = true;
 
-    const newContractor: UserCreate = {
+    const newContractor: AdminCreate = {
       address: this.address.value,
-      login: this.email.value,
+      username: this.email.value,
       name: this.fullName.value,
-      password: (Md5.hashStr(this.password.value) as string),
-      role: this.stringToRoleConverter(this.role.value)
+      password: this.password.value,
+      roles: [this.stringToRoleConverter(this.role.value)]
     };
 
     this.usersService.createUser(newContractor)
@@ -109,7 +109,7 @@ export class UserCreateComponent implements OnInit {
       case this.RegistrarRoleName:
         return Role.Registrar;
       case this.RankPromoterRoleName:
-        return Role.RankPromoter;
+        return Role.Distributor;
       default:
         throw new Error(`Role ${roleName} not supported`);
     }

@@ -24,7 +24,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
     if (token) {
       const authData = {
-        access_token: `${token}`
+        Authorization: `Bearer ${token}`
       };
       headersConfig = {...headersConfig, ...authData};
     }

@@ -3,7 +3,6 @@ import {BaseEntityService} from './base-entity.service';
 import {Contract} from '../../models/contract.model';
 import {Observable, of} from 'rxjs';
 import {ContractCreate, ContractStatus, ContractUpdate, Rank, SearchResultPagination} from '../../models';
-import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +14,11 @@ export class ContractsService extends BaseEntityService<Contract> {
 
   protected search(): Observable<SearchResultPagination<Contract>> {
     // TODO: потом вернуть.
-    return this.getAll('/contracts');
+    return this.getAll('/contracts/');
   }
 
   public createContract(newContract: ContractCreate): Observable<Contract> {
-    return this.apiService.post('/contracts', newContract);
+    return this.apiService.post('/contracts/', newContract);
   }
 
   getById(id: number) {

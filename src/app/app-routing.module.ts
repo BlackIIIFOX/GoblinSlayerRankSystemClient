@@ -11,6 +11,7 @@ import {CreateNewContractComponent} from './create-new-contract/create-new-contr
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
+import {AdventurerDashboardComponent} from './adventurer-dashboard/adventurer-dashboard.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -27,7 +28,8 @@ const routes: Routes = [
       {path: 'my-contracts', component: MyListContractsComponent},
       {path: 'contracts', component: AllListContractsComponent},
       {path: 'contracts/:id', component: ContractDetailsEditorComponent},
-      {path: 'my-contracts/:id', component: ContractDetailsEditorComponent}
+      {path: 'my-contracts/:id', component: ContractDetailsEditorComponent},
+      {path: 'adventurer-dashboard', component: AdventurerDashboardComponent}
     ]
   },
   {

@@ -30,6 +30,7 @@ import {CreateNewContractComponent} from './create-new-contract/create-new-contr
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
+import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
     CreateNewContractComponent,
     MyListContractsComponent,
     AllListContractsComponent,
-    ContractDetailsEditorComponent
+    ContractDetailsEditorComponent,
+    AdventurerDashboardComponent
   ],
   imports: [
     BrowserModule,

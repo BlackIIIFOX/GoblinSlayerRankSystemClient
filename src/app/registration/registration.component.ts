@@ -1,24 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ToastService, UsersService} from '../core/services';
-import {Role, CustomerCreate} from '../core/models';
-import {Md5} from 'ts-md5';
-import {delay} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {CustomerCreate, AdventurerCreate} from '../core/models';
 import {Router} from '@angular/router';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs';
 
 @Component({
-  selector: 'app-contractor-registration',
-  templateUrl: './contractor-registration.component.html',
-  styleUrls: ['./contractor-registration.component.css']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class ContractorRegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
 
   submitted = false;
   processing = false;
   userAlreadyExist = false;
   registrationForm: FormGroup;
+  isAdventurerRegistration: boolean;
 
   constructor(private usersService: UsersService,
               private fb: FormBuilder,
@@ -27,6 +25,8 @@ export class ContractorRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isAdventurerRegistration = this.router.url.includes('adventurer-registration');
+
     this.registrationForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
@@ -38,6 +38,10 @@ export class ContractorRegistrationComponent implements OnInit {
       , {
         validator: this.MustMatch('password', 'confirmPassword')
       });
+
+    if (this.isAdventurerRegistration) {
+      this.registrationForm.addControl('reason', new FormControl('', Validators.required));
+    }
   }
 
   get email(): AbstractControl {
@@ -60,6 +64,10 @@ export class ContractorRegistrationComponent implements OnInit {
     return this.registrationForm.get('address');
   }
 
+  get reason(): AbstractControl {
+    return this.registrationForm.get('reason');
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -70,27 +78,42 @@ export class ContractorRegistrationComponent implements OnInit {
 
     this.processing = true;
 
-    const newContractor: CustomerCreate = {
-      address: this.address.value,
-      username: this.email.value,
-      name: this.fullName.value,
-      password: this.password.value
-    };
+    let registrationObservable: Observable<any>;
 
-    this.usersService.createCustomer(newContractor)
-      .subscribe(newUser => {
-        this.processing = false;
-        this.toastService.show('', 'Вы зарегистрированы, выполните авторизацию.');
-        this.router.navigateByUrl('/');
-      }, error => {
-        if (error.status === 400) {
-          this.userAlreadyExist = true;
-        } else {
-          this.toastService.show('Ошибка', 'Критическая ошибка на сервере.');
-        }
+    if (this.isAdventurerRegistration) {
+      const newAdventurer: AdventurerCreate = {
+        address: this.address.value,
+        username: this.email.value,
+        name: this.fullName.value,
+        password: this.password.value,
+        reason: this.reason.value
+      };
 
-        this.processing = false;
-      });
+      registrationObservable = this.usersService.createAdventurer(newAdventurer);
+    } else {
+      const newContractor: CustomerCreate = {
+        address: this.address.value,
+        username: this.email.value,
+        name: this.fullName.value,
+        password: this.password.value
+      };
+
+      registrationObservable = this.usersService.createCustomer(newContractor);
+    }
+
+    registrationObservable.subscribe(newUser => {
+      this.processing = false;
+      this.toastService.show('', 'Вы зарегистрированы, выполните авторизацию.');
+      this.router.navigateByUrl('/');
+    }, error => {
+      if (error.status === 400) {
+        this.userAlreadyExist = true;
+      } else {
+        this.toastService.show('Ошибка', 'Критическая ошибка на сервере.');
+      }
+
+      this.processing = false;
+    });
   }
 
   // custom validator to check that two fields match (https://jasonwatmore.com/post/2018/11/07/angular-7-reactive-forms-validation-example)

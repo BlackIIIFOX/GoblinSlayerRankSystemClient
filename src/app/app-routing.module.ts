@@ -6,7 +6,7 @@ import {MainContentComponent} from './main-content/main-content.component';
 import {AuthComponent} from './auth/auth.component';
 import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
-import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
@@ -20,7 +20,8 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: 'welcome', component: WelcomeComponent},
-      {path: 'contractor-registration', component: ContractorRegistrationComponent},
+      {path: 'contractor-registration', component: RegistrationComponent},
+      {path: 'adventurer-registration', component: RegistrationComponent},
       {path: 'login', component: AuthComponent},
       {path: 'create-new-contract', component: CreateNewContractComponent},
       {path: 'my-contracts', component: MyListContractsComponent},

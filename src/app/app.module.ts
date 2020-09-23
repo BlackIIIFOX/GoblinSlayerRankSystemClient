@@ -24,7 +24,7 @@ import {UserUpdateComponent} from './admin-panel/management-users/user-update/us
 import {UserCreateComponent} from './admin-panel/management-users/user-create/user-create.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
 import {AdventurerRegistrationComponent} from './adventurer-registration/adventurer-registration.component';
-import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {ToastsComponent} from './toasts/toasts.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
@@ -45,7 +45,7 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
     UserUpdateComponent,
     UserCreateComponent,
     AdventurerRegistrationComponent,
-    ContractorRegistrationComponent,
+    RegistrationComponent,
     ToastsComponent,
     CreateNewContractComponent,
     MyListContractsComponent,

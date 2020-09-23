@@ -8,12 +8,7 @@ import {ContractCreate, ContractStatus, ContractUpdate, Rank, SearchResultPagina
   providedIn: 'root'
 })
 export class ContractsService extends BaseEntityService<Contract> {
-  protected matches(restaurant: Contract, term: string): boolean {
-    return true;
-  }
-
   protected search(): Observable<SearchResultPagination<Contract>> {
-    // TODO: потом вернуть.
     return this.getAll('/contracts/');
   }
 
@@ -21,7 +16,7 @@ export class ContractsService extends BaseEntityService<Contract> {
     return this.apiService.post('/contracts/', newContract);
   }
 
-  getById(id: number) {
+  getById(id: number): Observable<Contract> {
     return this.apiService.get(`/contracts/${id}`);
   }
 

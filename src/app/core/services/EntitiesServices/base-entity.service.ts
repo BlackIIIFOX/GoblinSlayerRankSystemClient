@@ -70,8 +70,6 @@ export abstract class BaseEntityService<Entity> {
     searchFilter: new Map<string, string>()
   };
 
-  protected abstract matches(restaurant: Entity, term: string): boolean;
-
   protected abstract search(): Observable<SearchResultPagination<Entity>>;
 
   protected getAll(endpointGetAll: string): Observable<SearchResultPagination<Entity>> {

@@ -1,5 +1,5 @@
 export enum AdventurerStatus {
-  Active,
-  Dead,
-  Unconfirmed,
+  Active = 'Active',
+  Dead = 'Dead',
+  NotConfirmed = 'NotConfirmed',
 }

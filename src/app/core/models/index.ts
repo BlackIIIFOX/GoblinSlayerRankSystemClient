@@ -14,3 +14,4 @@ export * from './admin-create.model';
 export * from './items.model';
 export * from './adventurer-create.model';
 export * from './user-update.model';
+export * from './adventurer.model';

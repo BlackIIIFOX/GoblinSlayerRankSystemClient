@@ -24,12 +24,14 @@ import {UserUpdateComponent} from './admin-panel/management-users/user-update/us
 import {UserCreateComponent} from './admin-panel/management-users/user-create/user-create.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
 import {AdventurerRegistrationComponent} from './adventurer-registration/adventurer-registration.component';
-import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {ToastsComponent} from './toasts/toasts.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
+import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-dashboard.component';
+import { AdventurersStatementsComponent } from './adventurers-statements/adventurers-statements.component';
 
 @NgModule({
   declarations: [
@@ -45,12 +47,14 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
     UserUpdateComponent,
     UserCreateComponent,
     AdventurerRegistrationComponent,
-    ContractorRegistrationComponent,
+    RegistrationComponent,
     ToastsComponent,
     CreateNewContractComponent,
     MyListContractsComponent,
     AllListContractsComponent,
-    ContractDetailsEditorComponent
+    ContractDetailsEditorComponent,
+    AdventurerDashboardComponent,
+    AdventurersStatementsComponent
   ],
   imports: [
     BrowserModule,

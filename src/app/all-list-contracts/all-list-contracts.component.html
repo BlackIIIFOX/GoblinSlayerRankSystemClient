@@ -1,24 +1,32 @@
 <div class="container mt-5 mb-5">
   <h2>Контракты</h2>
   <div class="row row-cols-1 row-cols-md-3 mt-3">
-    <div class="col mb-4" *ngFor="let contract of contracts$ | async">
-      <div class="card h-100">
-        <div class="bg-secondary d-flex align-items-center" style="height: 12rem">
-          <i class="fas fa-camera fa-7x text-center mx-auto"></i>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">{{contract.nameContract}}</h5>
-          <p class="card-text">{{contract.description}}</p>
-        </div>
+    <ng-container *ngIf="contracts$ | async as contracts; else loading">
+      <ng-container *ngIf="contracts.length; else noItems">
+        <div class="col mb-4" *ngFor="let contract of contracts">
+          <div class="card h-100">
+            <div class="bg-secondary d-flex align-items-center" style="height: 12rem">
+              <i class="fas fa-camera fa-7x text-center mx-auto"></i>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{contract.nameContract}}</h5>
+              <p class="card-text">{{contract.description}}</p>
+            </div>
 
-        <a routerLink="./{{contract.id}}" class="btn btn-primary mb-3 mx-5">Рассмотреть</a>
+            <a routerLink="./{{contract.id}}" class="btn btn-primary mb-3 mx-5">Рассмотреть</a>
 
-        <div class="card-footer">
-          <small class="text-muted text-right">Время создания: {{contract.createTime | date}}</small>
-          <br>
-          <small class="text-muted text-right">Состояние: {{contract.contractStatus | contractStatus}}</small>
+            <div class="card-footer">
+              <small class="text-muted text-right">Время создания: {{contract.createTime | date}}</small>
+              <br>
+              <small class="text-muted text-right">Состояние: {{contract.contractStatus | contractStatus}}</small>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </ng-container>
+      <ng-template #noItems>
+        <p>Список контрактов пуст.</p>
+      </ng-template>
+    </ng-container>
   </div>
+  <ng-template #loading>loading...</ng-template>
 </div>

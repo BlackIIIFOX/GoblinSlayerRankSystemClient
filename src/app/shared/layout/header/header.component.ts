@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService, User} from '../../../core';
 import {Role} from '../../../core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   public isMenuCollapsed = true;
   public isLoggedIn = false;
 
-  constructor(private userService: AccountService) {
+  constructor(private userService: AccountService, public router: Router) {
   }
 
   ngOnInit(): void {

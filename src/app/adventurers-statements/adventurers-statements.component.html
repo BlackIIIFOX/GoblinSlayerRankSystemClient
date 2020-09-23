@@ -1,0 +1,25 @@
+<div class="container mt-5 mb-5">
+  <h2>Заявки на вступление в гильдию авагтюристов</h2>
+  <div class="row row-cols-1 row-cols-md-3 mt-3">
+    <ng-container *ngIf="$adventurers | async as adventurers; else loading">
+      <ng-container *ngIf="adventurers.length; else noItems">
+        <div class="col mb-4" *ngFor="let adventurer of adventurers">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Заявление от {{adventurer.username}}</h5>
+              <p class="card-text">Имя: {{adventurer.name}}
+                <br/>Адресс: {{adventurer.address}}
+                <br/>Причина: {{adventurer.reason}}</p>
+              <button type="button" class="btn btn-success" (click)="accept(adventurer)">Принять</button>
+              <button type="button" class="btn btn-danger ml-1" (click)="reject(adventurer)">Отклонить</button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noItems>
+        <p>Новых заявок нет.</p>
+      </ng-template>
+    </ng-container>
+  </div>
+  <ng-template #loading>loading...</ng-template>
+</div>

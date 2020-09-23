@@ -6,11 +6,13 @@ import {MainContentComponent} from './main-content/main-content.component';
 import {AuthComponent} from './auth/auth.component';
 import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
-import {ContractorRegistrationComponent} from './contractor-registration/contractor-registration.component';
+import {RegistrationComponent} from './registration/registration.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
+import {AdventurerDashboardComponent} from './adventurer-dashboard/adventurer-dashboard.component';
+import {AdventurersStatementsComponent} from './adventurers-statements/adventurers-statements.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -20,13 +22,16 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: 'welcome', component: WelcomeComponent},
-      {path: 'contractor-registration', component: ContractorRegistrationComponent},
+      {path: 'contractor-registration', component: RegistrationComponent},
+      {path: 'adventurer-registration', component: RegistrationComponent},
       {path: 'login', component: AuthComponent},
       {path: 'create-new-contract', component: CreateNewContractComponent},
       {path: 'my-contracts', component: MyListContractsComponent},
       {path: 'contracts', component: AllListContractsComponent},
       {path: 'contracts/:id', component: ContractDetailsEditorComponent},
-      {path: 'my-contracts/:id', component: ContractDetailsEditorComponent}
+      {path: 'my-contracts/:id', component: ContractDetailsEditorComponent},
+      {path: 'adventurer-dashboard', component: AdventurerDashboardComponent},
+      {path: 'adventurers-statements', component: AdventurersStatementsComponent}
     ]
   },
   {

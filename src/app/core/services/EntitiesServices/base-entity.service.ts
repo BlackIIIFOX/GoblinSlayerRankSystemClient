@@ -1,6 +1,6 @@
 import {DecimalPipe} from '@angular/common';
 import {ApiService} from '../api.service';
-import {map, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {Items, SearchResultPagination, StatePagination} from '../../models';
 import {Injectable} from '@angular/core';
@@ -29,6 +29,10 @@ export abstract class BaseEntityService<Entity> {
 
   set page(page: number) {
     this._set({page});
+  }
+
+  get maxPageSize() {
+    return 2147483647;
   }
 
   get total$() {
@@ -69,8 +73,6 @@ export abstract class BaseEntityService<Entity> {
     pageSize: 10,
     searchFilter: new Map<string, string>()
   };
-
-  protected abstract matches(restaurant: Entity, term: string): boolean;
 
   protected abstract search(): Observable<SearchResultPagination<Entity>>;
 

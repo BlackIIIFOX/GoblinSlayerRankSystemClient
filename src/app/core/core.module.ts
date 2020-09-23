@@ -11,7 +11,8 @@ import {
   AuthGuard,
   UsersService,
   ToastService,
-  ContractsService
+  ContractsService,
+  AdventurersService
 } from './services';
 
 @NgModule({
@@ -27,7 +28,8 @@ import {
     AuthGuard,
     UsersService,
     ToastService,
-    ContractsService
+    ContractsService,
+    AdventurersService
   ]
 })
 export class CoreModule {

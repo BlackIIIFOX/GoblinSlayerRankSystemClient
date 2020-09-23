@@ -44,19 +44,28 @@
     </ul>
 
     <ul *ngIf="isLoggedIn && currentUser" class="navbar-nav">
-      <li class="nav-item" *ngIf="currentUser.roles.includes(RoleEnum.Customer)">
+      <li class="nav-item" [ngClass]="{active: router.url.includes('create-new-contract')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Customer)">
         <a class="nav-link" routerLink="./create-new-contract">Новый контракт</a>
       </li>
 
-      <li class="nav-item" *ngIf="currentUser.roles.includes(RoleEnum.Customer)">
+      <li class="nav-item" [ngClass]="{active: router.url.includes('my-contracts')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Customer)">
         <a class="nav-link" routerLink="./my-contracts">Мои контракты</a>
       </li>
 
-      <li class="nav-item" *ngIf="currentUser.roles.includes(RoleEnum.Registrar)">
+      <li class="nav-item" [ngClass]="{active: router.url.includes('contracts')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Registrar)">
         <a class="nav-link" routerLink="./contracts">Контракты</a>
       </li>
 
-      <li class="nav-item" *ngIf="currentUser.roles.includes(RoleEnum.Adventurer)">
+      <li class="nav-item" [ngClass]="{active: router.url.includes('adventurers-statements')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Registrar)">
+        <a class="nav-link" routerLink="./adventurers-statements">Заявки авантюристов</a>
+      </li>
+
+      <li class="nav-item" [ngClass]="{active: router.url.includes('adventurer-dashboard')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Adventurer)">
         <a class="nav-link" routerLink="./adventurer-dashboard">Панель авантюриста</a>
       </li>
     </ul>

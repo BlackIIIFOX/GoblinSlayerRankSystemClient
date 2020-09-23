@@ -31,6 +31,7 @@ import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.co
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
 import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-dashboard.component';
+import { AdventurersStatementsComponent } from './adventurers-statements/adventurers-statements.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-
     MyListContractsComponent,
     AllListContractsComponent,
     ContractDetailsEditorComponent,
-    AdventurerDashboardComponent
+    AdventurerDashboardComponent,
+    AdventurersStatementsComponent
   ],
   imports: [
     BrowserModule,

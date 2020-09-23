@@ -17,6 +17,12 @@
         Вы считаетесь погибшим. Свяжитесь с гильдией.
       </h3>
     </div>
+
+    <div *ngIf="adventurer.status===AdventurerStatus.Rejected">
+      <h3>
+        Ваша заявка была отклонена.
+      </h3>
+    </div>
   </div>
 
   <ng-template #loading>

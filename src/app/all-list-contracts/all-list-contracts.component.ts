@@ -32,8 +32,7 @@ export class AllListContractsComponent implements OnInit {
         console.log('Id:' + currentUser.id);
 
         this.contractsService.searchFilter.clear();
-        this.contractsService.pageSize = 2147483647;
-        this.contractsService.refresh();
+        this.contractsService.pageSize = this.contractsService.maxPageSize;
         this.contracts$ = this.contractsService.entities$;
       }
     );

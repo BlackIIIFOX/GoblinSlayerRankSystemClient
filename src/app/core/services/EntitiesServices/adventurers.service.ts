@@ -21,6 +21,6 @@ export class AdventurersService extends BaseEntityService<Adventurer> {
       status: newStatus
     };
 
-    return this.apiService.put(`/adventurers/${id}`, request);
+    return this.apiService.put(`/adventurers/${id}/status/`, request);
   }
 }

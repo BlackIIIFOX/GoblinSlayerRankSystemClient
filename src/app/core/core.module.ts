@@ -14,6 +14,7 @@ import {
   ContractsService,
   AdventurersService
 } from './services';
+import {NotificationService} from './services/notification.service';
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,8 @@ import {
     UsersService,
     ToastService,
     ContractsService,
-    AdventurersService
+    AdventurersService,
+    NotificationService
   ]
 })
 export class CoreModule {

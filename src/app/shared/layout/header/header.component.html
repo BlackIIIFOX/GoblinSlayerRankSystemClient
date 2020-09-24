@@ -106,6 +106,10 @@
             Настройки
           </button>
 
+          <button routerLink="/profile/notifications" class="dropdown-item" (click)="$event.preventDefault()" disabled>
+            Оповещения ({{contractNotifications.length}})
+          </button>
+
           <button *ngIf="currentUser.roles.includes(RoleEnum.Admin)" routerLink="/admin" class="dropdown-item"
                   (click)="$event.preventDefault()">
             Панель администратора

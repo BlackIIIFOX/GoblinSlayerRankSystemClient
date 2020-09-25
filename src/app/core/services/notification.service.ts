@@ -12,10 +12,16 @@ export class NotificationService {
 
   private timeoutUpdateMs = 5000;
   private isStarted: boolean;
-  // tslint:disable-next-line:variable-name
-  private _contractNotifications = new BehaviorSubject<ContractNotification[]>([]);
+  private contractNotificationsSubject = new BehaviorSubject<ContractNotification[]>([]);
   private $notificationObservable: Observable<Notification>;
   private subscriptionNotification: Subscription;
+  private isStartedSubject = new BehaviorSubject<boolean>(false);
+
+  private contractNotificationsCash: ContractNotification[];
+
+  public get $isStarted(): Observable<boolean> {
+    return this.isStartedSubject.asObservable();
+  }
 
   constructor(private apiService: ApiService) {
     console.log('service');
@@ -32,14 +38,18 @@ export class NotificationService {
     }
 
     this.subscriptionNotification = this.$notificationObservable.subscribe(notification => {
-      this._contractNotifications.next(notification.contractNotifications);
+      this.contractNotificationsCash = notification.contractNotifications;
+
+      this.contractNotificationsSubject.next(this.contractNotificationsCash);
     });
     this.isStarted = true;
+    this.isStartedSubject.next(this.isStarted);
   }
 
   public stopService() {
     this.subscriptionNotification?.unsubscribe();
     this.isStarted = false;
+    this.isStartedSubject.next(this.isStarted);
   }
 
   public getContractNotificationObservable(): Observable<ContractNotification[]> {
@@ -47,10 +57,13 @@ export class NotificationService {
       throw new Error('Service not started');
     }
 
-    return this._contractNotifications.asObservable();
+    return this.contractNotificationsSubject.asObservable();
   }
 
   public confirmContractNotification(idNotification: number): Observable<void> {
+    this.contractNotificationsCash = this.contractNotificationsCash.filter(notification => notification.id !== idNotification);
+    this.contractNotificationsSubject.next(this.contractNotificationsCash);
+
     return this.apiService.post(`/account/notifications/contract-notifications/${idNotification}`);
   }
 }

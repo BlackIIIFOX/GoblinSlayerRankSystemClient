@@ -12,24 +12,31 @@ export class NotificationService {
 
   private timeoutUpdateMs = 5000;
   private isStarted: boolean;
-  private contractNotificationsSubject = new BehaviorSubject<ContractNotification[]>([]);
+  private contractNotificationsSubject;
   private $notificationObservable: Observable<Notification>;
   private subscriptionNotification: Subscription;
   private isStartedSubject = new BehaviorSubject<boolean>(false);
-
   private contractNotificationsCash: ContractNotification[];
 
-  public get $isStarted(): Observable<boolean> {
-    return this.isStartedSubject.asObservable();
-  }
-
   constructor(private apiService: ApiService) {
-    console.log('service');
+    this.contractNotificationsSubject = new BehaviorSubject<ContractNotification[]>(this.contractNotificationsCash);
     this.$notificationObservable = interval(this.timeoutUpdateMs)
       .pipe(
         startWith(0),
         switchMap(() => this.apiService.get(`/account/notifications/`)),
       );
+  }
+
+  public get $isStarted(): Observable<boolean> {
+    return this.isStartedSubject.asObservable();
+  }
+
+  public get $contractNotifications(): Observable<ContractNotification[]> {
+    if (!this.isStarted) {
+      throw new Error('Service not started');
+    }
+
+    return this.contractNotificationsSubject.asObservable();
   }
 
   public startService() {
@@ -50,14 +57,6 @@ export class NotificationService {
     this.subscriptionNotification?.unsubscribe();
     this.isStarted = false;
     this.isStartedSubject.next(this.isStarted);
-  }
-
-  public getContractNotificationObservable(): Observable<ContractNotification[]> {
-    if (!this.isStarted) {
-      throw new Error('Service not started');
-    }
-
-    return this.contractNotificationsSubject.asObservable();
   }
 
   public confirmContractNotification(idNotification: number): Observable<void> {

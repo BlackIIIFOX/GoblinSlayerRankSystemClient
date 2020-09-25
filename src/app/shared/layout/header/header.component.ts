@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
         if (this.isLoggedIn) {
           this.notificationService.startService();
-          this.notificationService.getContractNotificationObservable().subscribe(contractNotifications => {
+          this.notificationService.$contractNotifications.subscribe(contractNotifications => {
             this.contractNotifications = contractNotifications;
           });
         } else {

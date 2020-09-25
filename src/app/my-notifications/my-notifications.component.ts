@@ -19,7 +19,7 @@ export class MyNotificationsComponent implements OnInit {
     this.isLoading = true;
     this.notificationService.$isStarted.subscribe(isStartedService => {
       if (isStartedService) {
-        this.notificationService.getContractNotificationObservable().subscribe(contractNotifications => {
+        this.notificationService.$contractNotifications.subscribe(contractNotifications => {
           if (contractNotifications) {
             this.isLoading = false;
             this.contractNotifications = contractNotifications;
@@ -33,15 +33,11 @@ export class MyNotificationsComponent implements OnInit {
 
   accept(notification: ContractNotification) {
     this.notificationService.confirmContractNotification(notification.id).subscribe();
-    //this.contractNotifications = this.contractNotifications.filter(
-    //notificationItem => notificationItem.id !== notification.id);
   }
 
   acceptAll() {
     for (const notification of this.contractNotifications) {
       this.notificationService.confirmContractNotification(notification.id).subscribe();
     }
-
-    //this.contractNotifications = [];
   }
 }

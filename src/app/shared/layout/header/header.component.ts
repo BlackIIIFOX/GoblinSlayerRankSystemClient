@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AccountService, User} from '../../../core';
+import {AccountService, ContractNotification, User} from '../../../core';
 import {Role} from '../../../core';
 import {Router} from '@angular/router';
+import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +17,25 @@ export class HeaderComponent implements OnInit {
   // For xs devices.
   public isMenuCollapsed = true;
   public isLoggedIn = false;
+  public contractNotifications: ContractNotification[] = [];
 
-  constructor(private userService: AccountService, public router: Router) {
+  constructor(private userService: AccountService, public router: Router, private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
     this.userService.isAuthenticated.subscribe(
-      isAuth => this.isLoggedIn = isAuth,
+      isAuth => {
+        this.isLoggedIn = isAuth;
+
+        if (this.isLoggedIn) {
+          this.notificationService.startService();
+          this.notificationService.$contractNotifications.subscribe(contractNotifications => {
+            this.contractNotifications = contractNotifications;
+          });
+        } else {
+          this.notificationService.stopService();
+        }
+      },
       error => {
       }
     );

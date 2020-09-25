@@ -15,3 +15,6 @@ export * from './items.model';
 export * from './adventurer-create.model';
 export * from './user-update.model';
 export * from './adventurer.model';
+export * from './notification.model';
+export * from './contract-notification.model';
+

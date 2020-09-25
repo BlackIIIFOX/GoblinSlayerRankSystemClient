@@ -13,6 +13,7 @@ import {ContractDetailsEditorComponent} from './contract-details-editor/contract
 import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
 import {AdventurerDashboardComponent} from './adventurer-dashboard/adventurer-dashboard.component';
 import {AdventurersStatementsComponent} from './adventurers-statements/adventurers-statements.component';
+import {MyNotificationsComponent} from './my-notifications/my-notifications.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -31,7 +32,8 @@ const routes: Routes = [
       {path: 'contracts/:id', component: ContractDetailsEditorComponent},
       {path: 'my-contracts/:id', component: ContractDetailsEditorComponent},
       {path: 'adventurer-dashboard', component: AdventurerDashboardComponent},
-      {path: 'adventurers-statements', component: AdventurersStatementsComponent}
+      {path: 'adventurers-statements', component: AdventurersStatementsComponent},
+      {path: 'profile/notifications', component: MyNotificationsComponent}
     ]
   },
   {

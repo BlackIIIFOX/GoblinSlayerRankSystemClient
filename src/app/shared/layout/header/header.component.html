@@ -102,8 +102,12 @@
             <small class="d-block ml-1">Публичная страница</small>
           </button>
 
-          <button routerLink="/profile/setting" class="dropdown-item" (click)="$event.preventDefault()" disabled>
+          <button routerLink="/content/profile/setting" class="dropdown-item" (click)="$event.preventDefault()" disabled>
             Настройки
+          </button>
+
+          <button routerLink="/content/profile/notifications" class="dropdown-item" (click)="$event.preventDefault()">
+            Оповещения ({{contractNotifications.length}})
           </button>
 
           <button *ngIf="currentUser.roles.includes(RoleEnum.Admin)" routerLink="/admin" class="dropdown-item"

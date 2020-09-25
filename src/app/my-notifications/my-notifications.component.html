@@ -1,0 +1,29 @@
+<div class="container mt-5 mb-5">
+  <h2>Новые уведмоления</h2>
+  <div class="row my-3">
+    <p class="my-auto mr-3">Всего уведомлений: {{contractNotifications.length}}</p>
+    <button type="button" class="btn btn-success btn-sm" (click)="acceptAll()">Подтвердить все</button>
+  </div>
+  <ng-container *ngIf="!isLoading; else loading">
+    <ng-container *ngIf="contractNotifications.length; else noItems">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-warning" *ngFor="let notification of contractNotifications">
+          <div class="row">
+
+            <button type="button" class="btn btn-success m-1" (click)="accept(notification)">
+              <i class="fas fa-check fa-1x"></i>
+            </button>
+
+            <p class="my-auto ml-2">{{notification.createTime | date:'yyyy-MM-dd HH:mm'}}: Контракт №{{notification.contractId}}
+              "{{notification.contractName}}" изменил состояние с {{notification.contractOldStatus}}
+              на {{notification.contractNewStatus}}</p>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noItems>
+      <p>Новых оповещений нет.</p>
+    </ng-template>
+  </ng-container>
+  <ng-template #loading>loading...</ng-template>
+</div>

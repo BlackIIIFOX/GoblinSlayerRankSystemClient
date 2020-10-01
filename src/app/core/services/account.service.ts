@@ -27,10 +27,6 @@ export class AccountService {
   ) {
   }
 
-  getCurrentUser(): User {
-    return this.currentUserSubject.value;
-  }
-
   /**
    * Authentication user.
    * @param credentials login and password.

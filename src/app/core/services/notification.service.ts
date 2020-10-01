@@ -10,7 +10,7 @@ import {ContractNotification, Notification} from '../models';
 })
 export class NotificationService {
 
-  private timeoutUpdateMs = 5000;
+  private timeoutUpdateMs = 15000;
   private isStarted: boolean;
   private contractNotificationsSubject;
   private $notificationObservable: Observable<Notification>;

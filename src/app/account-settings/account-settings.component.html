@@ -1,0 +1,79 @@
+<div class="container pt-5 pb-5">
+
+  <h3 class="mb-5">Настройки профиля</h3>
+  <div class="col-sm-6">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label class="col-md-12 col-lg-2 col-form-label" for="fullName">ФИО</label>
+        <div class="col-md-12 col-lg-10">
+          <input type="text" class="form-control" id="fullName" [formControl]="fullName"
+                 [ngClass]="{ 'is-invalid': submitted && fullName.errors }">
+          <div *ngIf="submitted && fullName.errors" class="invalid-feedback">
+            <div *ngIf="fullName.errors.required">Введите ваши данные</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-12 col-lg-2 col-form-label" for="address">Адрес</label>
+        <div class="col-md-12 col-lg-10">
+          <input type="text" class="form-control" id="address" [formControl]="address"
+                 [ngClass]="{ 'is-invalid': submitted && address.errors }">
+          <div *ngIf="submitted && address.errors" class="invalid-feedback">
+            <div *ngIf="address.errors.required">Введите ваши данные</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary pull-xs-right" [disabled]="processing" type="submit">
+        Обновить
+      </button>
+    </form>
+
+    <div class="mt-5">
+      <p>
+        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="passwordEditor">
+          Изменение пароля
+        </button>
+      </p>
+      <div id="passwordEditor" [ngbCollapse]="isCollapsed">
+        <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+
+          <div class="form-group">
+            <label for="oldPassword">Текущий пароль</label>
+            <input type="password" class="form-control" id="oldPassword" [formControl]="oldPassword"
+                   [ngClass]="{ 'is-invalid': submittedPassword && oldPassword.errors }">
+            <div *ngIf="oldPassword.errors" class="invalid-feedback">
+              <div *ngIf="oldPassword.errors.required">Введите пароль</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Новый пароль</label>
+            <input type="password" class="form-control" id="password" [formControl]="password"
+                   [ngClass]="{ 'is-invalid': submittedPassword && password.errors }">
+            <div *ngIf="password.errors" class="invalid-feedback">
+              <div *ngIf="password.errors.required">Введите пароль</div>
+              <div *ngIf="password.errors.minlength">Пароль должен быть не менее 6 символов</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Подтвердите новый пароль</label>
+            <input type="password" class="form-control" id="confirmPassword" [formControl]="confirmPassword"
+                   [ngClass]="{ 'is-invalid': submittedPassword && confirmPassword.errors }">
+            <div *ngIf="confirmPassword.errors" class="invalid-feedback">
+              <div *ngIf="confirmPassword.errors.required">Повторно введите пароль</div>
+              <div *ngIf="confirmPassword.errors.mustMatch">Пароли не совпадают</div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary pull-xs-right" [disabled]="(submittedPassword && passwordForm.invalid) || processing" type="submit">
+            Изменить пароль
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

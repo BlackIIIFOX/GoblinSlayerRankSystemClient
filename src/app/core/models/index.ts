@@ -17,4 +17,6 @@ export * from './user-update.model';
 export * from './adventurer.model';
 export * from './notification.model';
 export * from './contract-notification.model';
+export * from './account-update.model';
+export * from './account-password-update.model';
 

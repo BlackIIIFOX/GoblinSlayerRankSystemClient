@@ -6,8 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CoreModule} from './core';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemUserDataService} from './core/mock';
 import {WelcomeComponent} from './welcome/welcome.component';
 
 import {
@@ -23,7 +21,6 @@ import {DashboardComponent} from './admin-panel/dashboard/dashboard.component';
 import {UserUpdateComponent} from './admin-panel/management-users/user-update/user-update.component';
 import {UserCreateComponent} from './admin-panel/management-users/user-create/user-create.component';
 import {ManagementUsersComponent} from './admin-panel/management-users/management-users.component';
-import {AdventurerRegistrationComponent} from './adventurer-registration/adventurer-registration.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ToastsComponent} from './toasts/toasts.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
@@ -33,6 +30,7 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
 import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-dashboard.component';
 import { AdventurersStatementsComponent } from './adventurers-statements/adventurers-statements.component';
 import { MyNotificationsComponent } from './my-notifications/my-notifications.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +45,6 @@ import { MyNotificationsComponent } from './my-notifications/my-notifications.co
     ManagementUsersComponent,
     UserUpdateComponent,
     UserCreateComponent,
-    AdventurerRegistrationComponent,
     RegistrationComponent,
     ToastsComponent,
     CreateNewContractComponent,
@@ -56,7 +53,8 @@ import { MyNotificationsComponent } from './my-notifications/my-notifications.co
     ContractDetailsEditorComponent,
     AdventurerDashboardComponent,
     AdventurersStatementsComponent,
-    MyNotificationsComponent
+    MyNotificationsComponent,
+    AccountSettingsComponent
   ],
   imports: [
     BrowserModule,

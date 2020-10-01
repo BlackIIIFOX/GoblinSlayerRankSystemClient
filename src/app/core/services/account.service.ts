@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
-import {Role, User} from '../models';
-import {distinctUntilChanged, flatMap, map} from 'rxjs/operators';
+import {AccountPasswordUpdate, AccountUpdate, Role, User} from '../models';
+import {distinctUntilChanged, flatMap, map, tap} from 'rxjs/operators';
 import {ApiService} from './api.service';
 import {JwtService} from './jwt.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,9 @@ export class AccountService {
   constructor(
     private http: HttpClient,
     private apiService: ApiService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private router: Router
   ) {
-  }
-
-  getCurrentUser(): User {
-    return this.currentUserSubject.value;
   }
 
   /**
@@ -60,6 +58,21 @@ export class AccountService {
    */
   logOut() {
     this.purgeAuth();
+    this.router.navigateByUrl('/content/login');
+  }
+
+  public updateAccountInfo(updateInfo: AccountUpdate): Observable<User> {
+    return this.apiService.put('/account/', updateInfo).pipe(
+      tap(user => this.setUser(user))
+    );
+  }
+
+  public updatePassword(updatePasswordInfo: AccountPasswordUpdate): Observable<void> {
+    return this.apiService.put('/account/password/', updatePasswordInfo).pipe(
+      tap(() => {
+        this.logOut();
+      })
+    );
   }
 
   // Verify JWT in localstorage with server & load user's info.
@@ -87,11 +100,15 @@ export class AccountService {
   private setAuth(token: string, user: User) {
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(token);
-    // Set current user data into observable
-    this.currentUserSubject.next(user);
+    this.setUser(user);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
     console.log('User login');
+  }
+
+  private setUser(user: User) {
+    // Set current user data into observable
+    this.currentUserSubject.next(user);
   }
 
   // Purge current user and drop isAuth flag.

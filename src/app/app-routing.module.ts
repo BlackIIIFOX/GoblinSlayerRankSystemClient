@@ -14,6 +14,7 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
 import {AdventurerDashboardComponent} from './adventurer-dashboard/adventurer-dashboard.component';
 import {AdventurersStatementsComponent} from './adventurers-statements/adventurers-statements.component';
 import {MyNotificationsComponent} from './my-notifications/my-notifications.component';
+import {AccountSettingsComponent} from './account-settings/account-settings.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -33,7 +34,8 @@ const routes: Routes = [
       {path: 'my-contracts/:id', component: ContractDetailsEditorComponent},
       {path: 'adventurer-dashboard', component: AdventurerDashboardComponent},
       {path: 'adventurers-statements', component: AdventurersStatementsComponent},
-      {path: 'profile/notifications', component: MyNotificationsComponent}
+      {path: 'profile/notifications', component: MyNotificationsComponent},
+      {path: 'profile/settings', component: AccountSettingsComponent}
     ]
   },
   {

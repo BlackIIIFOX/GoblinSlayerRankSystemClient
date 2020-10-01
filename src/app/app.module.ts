@@ -33,6 +33,7 @@ import {AllListContractsComponent} from './all-list-contracts/all-list-contracts
 import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-dashboard.component';
 import { AdventurersStatementsComponent } from './adventurers-statements/adventurers-statements.component';
 import { MyNotificationsComponent } from './my-notifications/my-notifications.component';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MyNotificationsComponent } from './my-notifications/my-notifications.co
     ContractDetailsEditorComponent,
     AdventurerDashboardComponent,
     AdventurersStatementsComponent,
-    MyNotificationsComponent
+    MyNotificationsComponent,
+    AccountSettingsComponent
   ],
   imports: [
     BrowserModule,

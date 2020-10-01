@@ -15,7 +15,7 @@ export class AllListContractsComponent implements OnInit {
   public contracts$: Observable<Contract[]>;
   public currentUser$: User;
 
-  constructor(private contractsService: ContractsService, private accountService: AccountService) {
+  constructor(public contractsService: ContractsService, private accountService: AccountService) {
   }
 
   ngOnInit(): void {
@@ -31,8 +31,9 @@ export class AllListContractsComponent implements OnInit {
 
         console.log('Id:' + currentUser.id);
 
+        this.contractsService.pageSize = 6;
         this.contractsService.searchFilter.clear();
-        this.contractsService.pageSize = this.contractsService.maxPageSize;
+        this.contractsService.refresh();
         this.contracts$ = this.contractsService.entities$;
       }
     );

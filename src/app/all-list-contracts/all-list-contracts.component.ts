@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {AccountService, ContractsService} from '../core/services';
 import {Observable} from 'rxjs';
 import {Contract} from '../core/models/contract.model';
-import {Rank, Role, User} from '../core/models';
+import {ContractStatus, Rank, Role, User} from '../core/models';
 import {map} from 'rxjs/operators';
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-list-contracts',
@@ -11,9 +12,16 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./all-list-contracts.component.css']
 })
 export class AllListContractsComponent implements OnInit {
-
   public contracts$: Observable<Contract[]>;
   public currentUser$: User;
+  // tslint:disable-next-line:variable-name
+  private _nameContractFilter: string;
+  // tslint:disable-next-line:variable-name
+  private _contractStatusFilter: ContractStatus;
+  // tslint:disable-next-line:variable-name
+  private _minRankFilter: Rank;
+  public contractStatus = Object.values(ContractStatus);
+  public ranks = Object.values(Rank);
 
   constructor(public contractsService: ContractsService, private accountService: AccountService) {
   }
@@ -39,4 +47,57 @@ export class AllListContractsComponent implements OnInit {
     );
   }
 
+  set nameContractFilter(value: string) {
+    this._nameContractFilter = value;
+
+    if (this._nameContractFilter) {
+      this.contractsService.searchFilter.set('nameContract', this._nameContractFilter);
+    } else {
+      this.contractsService.searchFilter.delete('nameContract');
+    }
+  }
+
+  get nameContractFilter(): string {
+    return this._nameContractFilter;
+  }
+
+  get contractStatusFilter(): ContractStatus {
+    return this._contractStatusFilter;
+  }
+
+  set contractStatusFilter(value: ContractStatus) {
+    this._contractStatusFilter = value;
+
+    if (this._contractStatusFilter) {
+      this.contractsService.searchFilter.set('contractStatus', this._contractStatusFilter);
+    } else {
+      this.contractsService.searchFilter.delete('contractStatus');
+    }
+  }
+
+  set minRankFilter(value: Rank) {
+    this._minRankFilter = value;
+
+    if (this._minRankFilter) {
+      this.contractsService.searchFilter.set('minRank', this._minRankFilter);
+    } else {
+      this.contractsService.searchFilter.delete('minRank');
+    }
+  }
+
+  get minRankFilter(): Rank {
+    return this._minRankFilter;
+  }
+
+  clearSearch() {
+    this.contractsService.searchFilter.clear();
+    this.nameContractFilter = null;
+    this.minRankFilter = null;
+    this.contractStatusFilter = null;
+    this.contractsService.refresh();
+  }
+
+  search() {
+    this.contractsService.refresh();
+  }
 }

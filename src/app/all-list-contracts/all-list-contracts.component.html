@@ -1,6 +1,28 @@
 <div class="container mt-5 mb-5">
   <h2>Контракты</h2>
 
+  <div class="row">
+    <input class="form-control col-4" placeholder="Название" type="text" name="searchTerm" [(ngModel)]="nameContractFilter"/>
+
+    <select class="form-control col-2 ml-2" id="statusSelect" [(ngModel)]="contractStatusFilter">
+      <option value="" selected disabled hidden>Статус</option>
+      <option *ngFor="let status of contractStatus" [value]="status">{{status | contractStatus}}</option>
+    </select>
+
+      <select class="form-control col-2 ml-2" id="minLevelSelect" [(ngModel)]="minRankFilter">
+        <option value="" selected disabled hidden>Ранг</option>
+        <option *ngFor="let rank of ranks" [value]="rank">{{rank | rank}}</option>
+      </select>
+
+    <button type="button" class="btn btn-primary ml-2 col-1" (click)="clearSearch()">
+      Очистить
+    </button>
+
+    <button type="button" class="btn btn-primary ml-2 col-1" (click)="search()">
+      Поиск
+    </button>
+  </div>
+
   <ng-container *ngIf="contracts$ | async as contracts; else loading">
     <div class="d-flex justify-content-between p-2">
       <ngb-pagination

@@ -1,7 +1,46 @@
 <div class="container mt-5 mb-5">
   <h2>Контракты</h2>
-  <div class="row row-cols-1 row-cols-md-3 mt-3">
-    <ng-container *ngIf="contracts$ | async as contracts; else loading">
+
+  <div class="row">
+    <input class="form-control col-4" placeholder="Название" type="text" name="searchTerm" [(ngModel)]="nameContractFilter"/>
+
+    <select class="form-control col-2 ml-2" id="statusSelect" [(ngModel)]="contractStatusFilter">
+      <option value="" selected disabled hidden>Статус</option>
+      <option *ngFor="let status of contractStatus" [value]="status">{{status | contractStatus}}</option>
+    </select>
+
+      <select class="form-control col-2 ml-2" id="minLevelSelect" [(ngModel)]="minRankFilter">
+        <option value="" selected disabled hidden>Ранг</option>
+        <option *ngFor="let rank of ranks" [value]="rank">{{rank | rank}}</option>
+      </select>
+
+    <button type="button" class="btn btn-primary ml-2 col-1" (click)="clearSearch()">
+      Очистить
+    </button>
+
+    <button type="button" class="btn btn-primary ml-2 col-1" (click)="search()">
+      Поиск
+    </button>
+  </div>
+
+  <ng-container *ngIf="contracts$ | async as contracts; else loading">
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [collectionSize]="(contractsService.total$ | async)!" [(page)]="contractsService.page"
+        [pageSize]="contractsService.pageSize">
+      </ngb-pagination>
+
+      <label>
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="contractsService.pageSize">
+          <option [ngValue]="6">6 items per page</option>
+          <option [ngValue]="9">9 items per page</option>
+          <option [ngValue]="12">12 items per page</option>
+          <option [ngValue]="36">36 items per page</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 mt-3">
       <ng-container *ngIf="contracts.length; else noItems">
         <div class="col mb-4" *ngFor="let contract of contracts">
           <div class="card h-100">
@@ -26,7 +65,7 @@
       <ng-template #noItems>
         <p>Список контрактов пуст.</p>
       </ng-template>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
   <ng-template #loading>loading...</ng-template>
 </div>

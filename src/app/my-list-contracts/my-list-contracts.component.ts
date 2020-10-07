@@ -1,25 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AccountService, ContractsService} from '../core/services';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Contract} from '../core/models/contract.model';
-import {Rank, Role, User} from '../core/models';
-import {map} from 'rxjs/operators';
+import {User} from '../core/models';
 
 @Component({
   selector: 'app-list-contracts',
   templateUrl: './my-list-contracts.component.html',
   styleUrls: ['./my-list-contracts.component.css']
 })
-export class MyListContractsComponent implements OnInit {
+export class MyListContractsComponent implements OnInit, OnDestroy {
 
   public contracts$: Observable<Contract[]>;
   public currentUser$: User;
+  private accountSubscription: Subscription;
 
   constructor(private contractsService: ContractsService, private accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    this.accountService.currentUser.subscribe(currentUser => {
+    console.log('create');
+    this.accountSubscription = this.accountService.currentUser.subscribe(currentUser => {
         if (!currentUser) {
           console.error('currentUser is null');
           return;
@@ -38,5 +39,9 @@ export class MyListContractsComponent implements OnInit {
         this.contracts$ = this.contractsService.entities$;
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.accountSubscription.unsubscribe();
   }
 }

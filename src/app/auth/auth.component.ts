@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 
 import {AccountService, Errors} from '../core';
 import {Md5} from 'ts-md5';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-auth-page',
@@ -52,9 +53,15 @@ export class AuthComponent implements OnInit {
       .subscribe(
         data => this.router.navigateByUrl('/'),
         errors => {
+          let errorMessage = 'Произошла непредвиненная ошибка';
+
+          if (errors.status === 403) {
+            errorMessage = 'Введен неверный логин или пароль';
+          }
+
           this.errors = {
             errors: {
-              '': 'Такого пользователя не существует'
+              '': errorMessage
             }
           };
 

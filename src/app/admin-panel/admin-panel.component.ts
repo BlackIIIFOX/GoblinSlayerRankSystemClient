@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../core/models';
 import {AccountService} from '../core/services';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-admin-panel',
@@ -14,6 +15,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
 
   public pageRoute = '/admin';
   public currentUser: User;
+  private accountSubscription: Subscription;
 
   constructor(private renderer: Renderer2, public router: Router, private userService: AccountService) {
   }
@@ -21,7 +23,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.adminPanelClasses.forEach(adminBodyClass => this.renderer.addClass(document.body, adminBodyClass));
 
-    this.userService.currentUser.subscribe(
+    this.accountSubscription = this.userService.currentUser.subscribe(
       (userData) => {
         if (userData) {
           this.currentUser = userData;
@@ -34,6 +36,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.adminPanelClasses.forEach(adminBodyClass => this.renderer.removeClass(document.body, adminBodyClass));
+    this.accountSubscription.unsubscribe();
   }
 
 }

@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contract} from '../core/models/contract.model';
 import {switchMap} from 'rxjs/operators';
 import {AccountService, ContractsService, ToastService} from '../core/services';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ContractStatus, ContractUpdate, Rank, Role, User} from '../core/models';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-contract-details-editor',
   templateUrl: './contract-details-editor.component.html',
   styleUrls: ['./contract-details-editor.component.css']
 })
-export class ContractDetailsEditorComponent implements OnInit {
+export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
 
   public contract: Contract;
   public contractId: number;
@@ -23,6 +24,7 @@ export class ContractDetailsEditorComponent implements OnInit {
   public ranks = Object.values(Rank);
   public isUserCanUpdateContract = false;
   public currentUser: User;
+  private accountSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -33,8 +35,9 @@ export class ContractDetailsEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.accountService.currentUser.subscribe(
+    this.accountSubscription = this.accountService.currentUser.subscribe(
       user => {
+        console.log('test');
         this.currentUser = user;
 
         this.isUserCanUpdateContract = this.currentUser.roles.includes(Role.Registrar);
@@ -103,7 +106,19 @@ export class ContractDetailsEditorComponent implements OnInit {
     this.updateContract(ContractStatus.Rejected);
   }
 
-  updateContract(newStatus: ContractStatus) {
+  onPayed() {
+    this.updateContract(ContractStatus.Accepted);
+  }
+
+  onPayout() {
+    this.updateContract(ContractStatus.Completed);
+  }
+
+  updateContractFromForm() {
+    this.updateContract(this.status.value);
+  }
+
+  private updateContract(newStatus: ContractStatus) {
     this.submitted = true;
 
     if (!this.detailForm.valid) {
@@ -111,7 +126,7 @@ export class ContractDetailsEditorComponent implements OnInit {
     }
 
     if (newStatus === null) {
-      newStatus = this.status.value;
+      throw new Error('newStatus is null');
     }
 
     const updateInfo: ContractUpdate = {
@@ -132,5 +147,9 @@ export class ContractDetailsEditorComponent implements OnInit {
       }, error => {
         this.toastService.show('Ошибка', 'Не удалось обновить контракт. ' + error.message);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.accountSubscription.unsubscribe();
   }
 }

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AccountService, ContractsService} from '../core/services';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Contract} from '../core/models/contract.model';
 import {ContractStatus, Rank, Role, User} from '../core/models';
 import {map} from 'rxjs/operators';
@@ -11,7 +11,7 @@ import validate = WebAssembly.validate;
   templateUrl: './all-list-contracts.component.html',
   styleUrls: ['./all-list-contracts.component.css']
 })
-export class AllListContractsComponent implements OnInit {
+export class AllListContractsComponent implements OnInit, OnDestroy {
   public contracts$: Observable<Contract[]>;
   public currentUser$: User;
   // tslint:disable-next-line:variable-name
@@ -22,12 +22,13 @@ export class AllListContractsComponent implements OnInit {
   private _minRankFilter: Rank;
   public contractStatus = Object.values(ContractStatus);
   public ranks = Object.values(Rank);
+  private accountSubscription: Subscription;
 
   constructor(public contractsService: ContractsService, private accountService: AccountService) {
   }
 
   ngOnInit(): void {
-    this.accountService.currentUser.subscribe(currentUser => {
+    this.accountSubscription = this.accountService.currentUser.subscribe(currentUser => {
         if (!currentUser) {
           console.error('currentUser is null');
           return;
@@ -99,5 +100,9 @@ export class AllListContractsComponent implements OnInit {
 
   search() {
     this.contractsService.refresh();
+  }
+
+  ngOnDestroy(): void {
+    this.accountSubscription.unsubscribe();
   }
 }

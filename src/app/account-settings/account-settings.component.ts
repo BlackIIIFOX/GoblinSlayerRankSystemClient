@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AccountService, ToastService} from '../core/services';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AccountPasswordUpdate, AccountUpdate} from '../core/models';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.css']
 })
-export class AccountSettingsComponent implements OnInit {
+export class AccountSettingsComponent implements OnInit, OnDestroy {
 
+  private accountSubscription: Subscription;
   isCollapsed = true;
   updateForm: FormGroup;
   passwordForm: FormGroup;
@@ -27,7 +29,7 @@ export class AccountSettingsComponent implements OnInit {
         address: ['', Validators.required]
       });
 
-    this.accountService.currentUser.subscribe(user => {
+    this.accountSubscription = this.accountService.currentUser.subscribe(user => {
       if (user) {
         this.fullName.setValue(user.name);
         this.address.setValue(user.address);
@@ -79,6 +81,7 @@ export class AccountSettingsComponent implements OnInit {
     this.processing = true;
     this.accountService.updateAccountInfo(accountInfo).subscribe(() => {
       this.processing = false;
+      this.toastService.show('', 'Обновлено.');
     }, error => {
       this.processing = false;
       this.toastService.show('Ошибка', 'Критическая ошибка на сервере.');
@@ -122,5 +125,9 @@ export class AccountSettingsComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
+  }
+
+  ngOnDestroy(): void {
+    this.accountSubscription.unsubscribe();
   }
 }

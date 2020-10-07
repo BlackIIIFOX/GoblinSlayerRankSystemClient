@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AccountService, ContractsService, ToastService} from '../core/services';
 import {ContractCreate, ContractStatus, User} from '../core/models';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-create-new-contract',
   templateUrl: './create-new-contract.component.html',
   styleUrls: ['./create-new-contract.component.css']
 })
-export class CreateNewContractComponent implements OnInit {
+export class CreateNewContractComponent implements OnInit, OnDestroy {
   newContractForm: FormGroup;
-
+  private accountSubscription: Subscription;
 
   submitted = false;
   processing = false;
@@ -35,8 +36,10 @@ export class CreateNewContractComponent implements OnInit {
         comment: ['']
       });
 
-    this.accountService.currentUser.subscribe(user => {
-      this.contractor = user;
+    this.accountSubscription = this.accountService.currentUser.subscribe(user => {
+      if (user) {
+        this.contractor = user;
+      }
     }, error => {
       this.toastService.show('Ошибка', 'Ошибка получения информации о заказчике.' + error.message);
     });
@@ -91,5 +94,9 @@ export class CreateNewContractComponent implements OnInit {
         this.toastService.show('Ошибка', 'Ошибка создания контракта.');
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.accountSubscription.unsubscribe();
   }
 }

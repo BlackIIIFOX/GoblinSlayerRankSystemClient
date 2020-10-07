@@ -2,29 +2,36 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
 import {AccountPasswordUpdate, AccountUpdate, Role, User} from '../models';
-import {distinctUntilChanged, flatMap, map, tap} from 'rxjs/operators';
+import {delay, distinctUntilChanged, flatMap, map, tap} from 'rxjs/operators';
 import {ApiService} from './api.service';
 import {JwtService} from './jwt.service';
 import {Router} from '@angular/router';
+import {NotificationService} from './notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  private currentUserSubject = new ReplaySubject<User>();
+  private endpoint = '/users';
+  private currentUserSubject = new ReplaySubject<User>(1);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
-
-  private endpoint = '/users';
 
   constructor(
     private http: HttpClient,
     private apiService: ApiService,
     private jwtService: JwtService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
+  }
+
+  /**
+   * Token received.
+   */
+  get isAuthenticated() {
+    return this.isAuthenticatedSubject.asObservable();
   }
 
   /**
@@ -36,16 +43,15 @@ export class AccountService {
     return this.apiService.post(`/auth/`, credentials)
       .pipe(flatMap(
         data => {
-          this.setAuth(data.token, null);
+          this.setToken(data.token);
           return this.apiService.get('/account/').pipe(
             map(user => {
               if (user.blocked) {
                 this.purgeAuth();
                 throw new Error('You are blocked');
               } else {
-                this.setAuth(data.token, user);
+                this.setAuth(user);
               }
-
               return user;
             })
           );
@@ -80,12 +86,12 @@ export class AccountService {
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
-
+      this.isAuthenticatedSubject.next(true);
       this.apiService.get('/account/')
         .subscribe(
           user => {
             if (!user.blocked) {
-              this.setAuth(this.jwtService.getToken(), user);
+              this.setAuth(user);
             }
           },
           err => this.purgeAuth()
@@ -96,14 +102,23 @@ export class AccountService {
     }
   }
 
-  // Sett current user and isAuth flag.
-  private setAuth(token: string, user: User) {
-    // Save JWT sent from server in localstorage
+  // Save JWT sent from server in localstorage
+  private setToken(token: string) {
+    if (!token) {
+      throw Error('Token is null');
+    }
+
     this.jwtService.saveToken(token);
+    this.isAuthenticatedSubject.next(true);
+  }
+
+  // Sett current user and isAuth flag.
+  private setAuth(user: User) {
+    this.notificationService.startService();
     this.setUser(user);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
-    console.log('User login');
+    console.log('user login');
   }
 
   private setUser(user: User) {
@@ -113,6 +128,7 @@ export class AccountService {
 
   // Purge current user and drop isAuth flag.
   private purgeAuth() {
+    this.notificationService.stopService();
     // Remove JWT from localstorage
     this.jwtService.destroyToken();
     // Set current user to an empty object

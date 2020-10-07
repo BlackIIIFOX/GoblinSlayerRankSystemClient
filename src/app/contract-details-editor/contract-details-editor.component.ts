@@ -35,6 +35,7 @@ export class ContractDetailsEditorComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.currentUser.subscribe(
       user => {
+        console.log('test');
         this.currentUser = user;
 
         this.isUserCanUpdateContract = this.currentUser.roles.includes(Role.Registrar);
@@ -103,7 +104,19 @@ export class ContractDetailsEditorComponent implements OnInit {
     this.updateContract(ContractStatus.Rejected);
   }
 
-  updateContract(newStatus: ContractStatus) {
+  onPayed() {
+    this.updateContract(ContractStatus.Accepted);
+  }
+
+  onPayout() {
+    this.updateContract(ContractStatus.Completed);
+  }
+
+  updateContractFromForm() {
+    this.updateContract(this.status.value);
+  }
+
+  private updateContract(newStatus: ContractStatus) {
     this.submitted = true;
 
     if (!this.detailForm.valid) {
@@ -111,7 +124,7 @@ export class ContractDetailsEditorComponent implements OnInit {
     }
 
     if (newStatus === null) {
-      newStatus = this.status.value;
+      throw new Error('newStatus is null');
     }
 
     const updateInfo: ContractUpdate = {

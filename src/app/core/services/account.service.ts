@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class AccountService {
-  private currentUserSubject = new BehaviorSubject<User>(undefined);
+  private currentUserSubject = new ReplaySubject<User>();
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);

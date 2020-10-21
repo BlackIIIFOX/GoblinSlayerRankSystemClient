@@ -1,9 +1,9 @@
 <div class="container-fluid pt-5 pb-5">
-  <div
+  <ng-container
     *ngIf="$adventurer | async as adventurer; else loading"
     class="row justify-content-center align-items-center">
     <ng-container *ngIf="adventurer.status===AdventurerStatus.Active">
-      <div></div>
+      <app-all-list-contracts [isListForAdventurer]="true" [adventurerInfo]="adventurer"></app-all-list-contracts>
     </ng-container>
 
     <ng-container *ngIf="adventurer.status===AdventurerStatus.NotConfirmed">
@@ -23,7 +23,7 @@
         Ваша заявка была отклонена.
       </h3>
     </ng-container>
-  </div>
+  </ng-container>
 
   <ng-template #loading>
     <div class="row justify-content-center align-items-center">

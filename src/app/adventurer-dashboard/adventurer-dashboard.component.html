@@ -2,27 +2,27 @@
   <div
     *ngIf="$adventurer | async as adventurer; else loading"
     class="row justify-content-center align-items-center">
-    <div *ngIf="adventurer.status===AdventurerStatus.Active">
-      Все норм, требует дальнейшей разработки
-    </div>
+    <ng-container *ngIf="adventurer.status===AdventurerStatus.Active">
+      <div></div>
+    </ng-container>
 
-    <div *ngIf="adventurer.status===AdventurerStatus.NotConfirmed">
+    <ng-container *ngIf="adventurer.status===AdventurerStatus.NotConfirmed">
       <h3>
         Ожидайте подтверждения вашей заявки регистратором.
       </h3>
-    </div>
+    </ng-container>
 
-    <div *ngIf="adventurer.status===AdventurerStatus.Dead">
+    <ng-container *ngIf="adventurer.status===AdventurerStatus.Dead">
       <h3>
         Вы считаетесь погибшим. Свяжитесь с гильдией.
       </h3>
-    </div>
+    </ng-container>
 
-    <div *ngIf="adventurer.status===AdventurerStatus.Rejected">
+    <ng-container *ngIf="adventurer.status===AdventurerStatus.Rejected">
       <h3>
         Ваша заявка была отклонена.
       </h3>
-    </div>
+    </ng-container>
   </div>
 
   <ng-template #loading>

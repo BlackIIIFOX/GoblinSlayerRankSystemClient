@@ -7,7 +7,7 @@ import {map} from 'rxjs/operators';
 import validate = WebAssembly.validate;
 
 @Component({
-  selector: 'app-list-contracts',
+  selector: 'app-all-list-contracts',
   templateUrl: './all-list-contracts.component.html',
   styleUrls: ['./all-list-contracts.component.css']
 })

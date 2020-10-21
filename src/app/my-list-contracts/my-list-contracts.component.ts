@@ -5,7 +5,7 @@ import {Contract} from '../core/models/contract.model';
 import {User} from '../core/models';
 
 @Component({
-  selector: 'app-list-contracts',
+  selector: 'app-my-list-contracts',
   templateUrl: './my-list-contracts.component.html',
   styleUrls: ['./my-list-contracts.component.css']
 })

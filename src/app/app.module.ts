@@ -31,6 +31,7 @@ import { AdventurerDashboardComponent } from './adventurer-dashboard/adventurer-
 import { AdventurersStatementsComponent } from './adventurers-statements/adventurers-statements.component';
 import { MyNotificationsComponent } from './my-notifications/my-notifications.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { RegistrarDashboardComponent } from './registrar-dashboard/registrar-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     AdventurerDashboardComponent,
     AdventurersStatementsComponent,
     MyNotificationsComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    RegistrarDashboardComponent
   ],
   imports: [
     BrowserModule,

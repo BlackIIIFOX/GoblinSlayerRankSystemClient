@@ -54,14 +54,9 @@
         <a class="nav-link" routerLink="./my-contracts">Мои контракты</a>
       </li>
 
-      <li class="nav-item" [ngClass]="{active: router.url.includes('contracts')}"
+      <li class="nav-item" [ngClass]="{active: router.url.includes('registrar-dashboard')}"
           *ngIf="currentUser.roles.includes(RoleEnum.Registrar)">
-        <a class="nav-link" routerLink="./contracts">Контракты</a>
-      </li>
-
-      <li class="nav-item" [ngClass]="{active: router.url.includes('adventurers-statements')}"
-          *ngIf="currentUser.roles.includes(RoleEnum.Registrar)">
-        <a class="nav-link" routerLink="./adventurers-statements">Заявки авантюристов</a>
+        <a class="nav-link" routerLink="./registrar-dashboard">Панель регистратора</a>
       </li>
 
       <li class="nav-item" [ngClass]="{active: router.url.includes('adventurer-dashboard')}"

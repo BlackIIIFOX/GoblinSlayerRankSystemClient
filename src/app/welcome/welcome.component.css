@@ -22,3 +22,7 @@
   background:rgba(0,0,0,0.5);
 }
 
+.main-image {
+  max-width : 600px;
+}
+

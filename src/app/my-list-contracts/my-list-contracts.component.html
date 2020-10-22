@@ -4,23 +4,7 @@
     <ng-container *ngIf="contracts$ | async as contracts; else loading">
       <ng-container *ngIf="contracts.length; else noItems">
         <div class="col mb-4" *ngFor="let contract of contracts">
-          <div class="card h-100">
-            <div class="bg-secondary d-flex align-items-center" style="height: 12rem">
-              <i class="fas fa-camera fa-7x text-center mx-auto"></i>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{contract.nameContract}} (№ {{contract.id}})</h5>
-              <p class="card-text">{{contract.description}}</p>
-            </div>
-
-            <a routerLink="./{{contract.id}}" class="btn btn-primary mb-3 mx-5">Просмотр</a>
-
-            <div class="card-footer">
-              <small class="text-muted text-right">Время создания: {{contract.createTime | date}}</small>
-              <br>
-              <small class="text-muted text-right">Состояние: {{contract.contractStatus | contractStatus}}</small>
-            </div>
-          </div>
+          <app-contract-item [contract]="contract"></app-contract-item>
         </div>
       </ng-container>
       <ng-template #noItems>

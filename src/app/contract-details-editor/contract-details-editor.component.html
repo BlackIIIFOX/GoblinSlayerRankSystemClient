@@ -17,8 +17,12 @@
       Ожидает выплату награды в ближайшем офисе.
     </div>
 
-    <div class="alert alert-success" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Accepted">
+    <div class="alert alert-success" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Accepted && !contract.cancellationComment">
       Контракт принят гильдией. Ожидает взятие авантюристом на исполнение.
+    </div>
+
+    <div class="alert alert-warning" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Accepted && contract.cancellationComment">
+      Контракт был отменен авантюристом. Проверьте комментарий авантюриста. Контракт ожидает взятия другим авантюристом.
     </div>
 
     <div class="alert alert-secondary" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Performing">
@@ -95,41 +99,96 @@
         </div>
       </div>
 
-      <div class="text-center"
-           *ngIf="isUserCanUpdateContract && contract.contractStatus === contractStatusEnum.Created">
-        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
-                (click)="onReject()">
-          Отклонить
-        </button>
+      <ng-container *ngIf="isUserCanUpdateContract">
+        <div class="text-center mb-2"
+             *ngIf="contract.contractStatus === contractStatusEnum.Created">
+          <button class="btn btn-lg btn-primary pull-xs-right mr-2" [disabled]="processing" type="button"
+                  (click)="onAccept()">
+            Принять
+          </button>
 
-        <button class="btn btn-lg btn-primary pull-xs-right ml-3" [disabled]="processing" type="button"
-                (click)="onAccept()">
-          Принять
-        </button>
-      </div>
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  (click)="onReject()">
+            Отклонить
+          </button>
+        </div>
 
-      <div class="text-center"
-           *ngIf="isUserCanUpdateContract && contract.contractStatus === contractStatusEnum.Payment">
-        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
-                (click)="onPayed()">
-          Оплачен
-        </button>
-      </div>
+        <div class="text-center pb-2"
+             *ngIf="contract.contractStatus === contractStatusEnum.Payment">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  (click)="onPayed()">
+            Оплачен
+          </button>
+        </div>
 
-      <div class="text-center mb-2"
-           *ngIf="isUserCanUpdateContract && contract.contractStatus === contractStatusEnum.Payout">
-        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
-                (click)="onPayout()">
-          Завершить
-        </button>
-      </div>
+        <div class="text-center mb-2"
+             *ngIf="contract.contractStatus === contractStatusEnum.Payout">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  (click)="onPayout()">
+            Выплатить вознаграждение
+          </button>
+        </div>
 
-      <div class="text-center" *ngIf="isUserCanUpdateContract && contract.contractStatus !== contractStatusEnum.Created
-       && contract.contractStatus !== contractStatusEnum.Payment">
-        <button class="btn btn-lg btn-primary pull-xs-right mr-3" [disabled]="processing" type="button"
-                (click)="updateContractFromForm()">
-          Обновить
-        </button>
+        <div class="text-center mb-2"
+             *ngIf="contract.contractStatus === contractStatusEnum.Performed">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  (click)="onAcceptPerformed()">
+            Подтвердить исполнение
+          </button>
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  (click)="updateContractFromForm()">
+            Обновить
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="card mt-4 container-fluid"
+           *ngIf="contract.contractStatus !== contractStatusEnum.Created && contract.contractStatus !== contractStatusEnum.Payment">
+        <div class="card-body">
+          <h5 class="card-title col-12 text-bold">Авантюрист</h5>
+          <p class="card-text">Информация об исполнителе:
+            <ng-container *ngIf="executor">{{executor.name}} ({{executor.username}}),
+              {{executor.rank | rank}}</ng-container>
+            <ng-container *ngIf="!executor">исполнитель отсутсвует, контракт может быть взять авантюристом
+            </ng-container>
+          </p>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Комментарий</span>
+            </div>
+            <textarea class="form-control" aria-label="With textarea"
+                      name="adventurerComment"
+                      placeholder="Введите комментарий"
+                      (change)="adventurerCommentChange($event)"
+                      [disabled]="contract.contractStatus !== contractStatusEnum.Performing">{{adventurerComment}}</textarea>
+          </div>
+        </div>
+
+        <div class="text-center my-2" *ngIf="isAdventurer">
+          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="button"
+                  *ngIf="contract.contractStatus == contractStatusEnum.Accepted"
+                  (click)="onAcceptAdventurer()">
+            Взять контракт на исполнение
+          </button>
+
+          <ng-container
+            *ngIf="contract.contractStatus == contractStatusEnum.Performing && executor?.id === contract.executor">
+            <button class="btn btn-lg btn-primary pull-xs-right mr-2" [disabled]="processing
+             || !adventurerComment || adventurerComment?.length === 0" type="button"
+                    (click)="onPerformedAdventurer()">
+              Исполнен
+            </button>
+
+            <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing
+              || !adventurerComment || adventurerComment?.length === 0" type="button"
+                    (click)="onCancelAdventurer()">
+              Отменить
+            </button>
+          </ng-container>
+        </div>
       </div>
     </form>
   </div>

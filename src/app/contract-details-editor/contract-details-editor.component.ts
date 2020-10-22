@@ -2,9 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contract} from '../core/models/contract.model';
 import {switchMap} from 'rxjs/operators';
-import {AccountService, ContractsService, ToastService} from '../core/services';
+import {AccountService, AdventurersService, ContractsService, ToastService} from '../core/services';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ContractStatus, ContractUpdate, Rank, Role, User} from '../core/models';
+import {Adventurer, ContractStatus, ContractUpdate, Rank, Role, User} from '../core/models';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -23,15 +23,19 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
   public contractStatus = Object.values(ContractStatus);
   public ranks = Object.values(Rank);
   public isUserCanUpdateContract = false;
+  public isAdventurer;
   public currentUser: User;
   private accountSubscription: Subscription;
+  public executor: Adventurer;
+  public adventurerComment: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private contractsService: ContractsService,
               private toastService: ToastService,
               private fb: FormBuilder,
-              private accountService: AccountService) {
+              private accountService: AccountService,
+              private adventurerService: AdventurersService) {
   }
 
   ngOnInit(): void {
@@ -41,6 +45,7 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
         this.currentUser = user;
 
         this.isUserCanUpdateContract = this.currentUser.roles.includes(Role.Registrar);
+        this.isAdventurer = this.currentUser.roles.includes(Role.Adventurer);
 
         if (!this.isUserCanUpdateContract) {
           this.detailForm?.disable();
@@ -67,6 +72,29 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
 
     // const currentStatus = ContractStatus[];
     const isContractCreated = contract.contractStatus === ContractStatus.Created;
+
+    if (contract.executor) {
+      if (!this.executor || this.executor.id !== contract.executor) {
+        this.adventurerService.getById(contract.executor).subscribe(executor => {
+            this.executor = executor;
+          },
+          error => {
+            this.toastService.show('Ошибка', 'Не получить информацию об исполнителе' + error.message);
+          });
+      }
+    } else {
+      this.executor = null;
+    }
+
+    this.adventurerComment = null;
+
+    if (contract.cancellationComment) {
+      this.adventurerComment = contract.cancellationComment;
+    }
+
+    if (contract.performedComment) {
+      this.adventurerComment = contract.performedComment;
+    }
 
     this.status?.enable();
 
@@ -114,6 +142,10 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
     this.updateContract(ContractStatus.Completed);
   }
 
+  onAcceptPerformed() {
+    this.updateContract(ContractStatus.Payout);
+  }
+
   updateContractFromForm() {
     this.updateContract(this.status.value);
   }
@@ -129,12 +161,17 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
       throw new Error('newStatus is null');
     }
 
+    let executor = this.contract.executor;
+    if (newStatus === ContractStatus.Accepted) {
+      executor = null;
+    }
+
     const updateInfo: ContractUpdate = {
       registrarComment: this.registrarComment.value,
       requestComment: this.contract.requestComment,
       address: this.contract.address,
       description: this.contract.description,
-      executor: this.contract.executor,
+      executor,
       minRank: this.minLevel.value,
       reward: this.contract.reward,
       contractStatus: newStatus
@@ -147,6 +184,49 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
       }, error => {
         this.toastService.show('Ошибка', 'Не удалось обновить контракт. ' + error.message);
       });
+  }
+
+  onAcceptAdventurer() {
+    this.contractsService.startPerform(this.contractId)
+      .subscribe(contract => {
+        this.initContract(contract);
+        this.toastService.show('', 'Вы назначены исполнителем контракта');
+      }, error => {
+        this.toastService.show('Ошибка', 'Не удалось принять контракт. ' + error.message);
+      });
+  }
+
+  onCancelAdventurer() {
+    if (this.adventurerComment) {
+      this.contractsService.cancelPerform(this.contractId, this.adventurerComment)
+        .subscribe(contract => {
+          this.initContract(contract);
+          this.toastService.show('', 'Вы отменили исполнение контракта');
+        }, error => {
+          this.toastService.show('Ошибка', 'Не удалось отменить исполнение контракт. ' + error.message);
+        });
+    }
+  }
+
+  onPerformedAdventurer() {
+    if (this.adventurerComment) {
+      this.contractsService.performed(this.contractId, this.adventurerComment)
+        .subscribe(contract => {
+          this.initContract(contract);
+          this.toastService.show('', 'Вы подтвердили исполнили контракт, ожидайте подтверждения');
+        }, error => {
+          this.toastService.show('Ошибка', 'Не удалось обновить контракт. ' + error.message);
+        });
+    }
+  }
+
+  adventurerCommentChange($event) {
+    try {
+      this.adventurerComment = $event.target.value;
+    } catch (e) {
+      // tslint:disable-next-line:no-console
+      console.info('could not set adventurerComment');
+    }
   }
 
   ngOnDestroy(): void {

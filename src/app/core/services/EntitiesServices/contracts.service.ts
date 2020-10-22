@@ -23,4 +23,25 @@ export class ContractsService extends BaseEntityService<Contract> {
   updateContract(contractId: number, updateContract: ContractUpdate): Observable<Contract> {
     return this.apiService.put(`/contracts/${contractId}`, updateContract);
   }
+
+  startPerform(contractId: number): Observable<Contract> {
+    return this.apiService.post(`/contracts/${contractId}/perform/`);
+  }
+
+  performed(contractId: number, performedComment: string): Observable<Contract> {
+    const body = {
+      performedComment
+    };
+
+    return this.apiService.post(`/contracts/${contractId}/performed/`, body);
+  }
+
+  cancelPerform(contractId: number, cancellationComment: string): Observable<Contract> {
+    const body = {
+      cancellationComment
+    };
+
+    return this.apiService.post(`/contracts/${contractId}/cancel/`, body);
+  }
+
 }

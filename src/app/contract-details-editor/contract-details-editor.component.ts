@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Contract} from '../core/models/contract.model';
 import {switchMap} from 'rxjs/operators';
-import {AccountService, AdventurersService, ContractsService, ToastService} from '../core/services';
+import {AccountService, AdventurersService, ContractsService, ToastService, UsersService} from '../core/services';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Adventurer, ContractStatus, ContractUpdate, Rank, Role, User} from '../core/models';
 import {Subscription} from 'rxjs';
@@ -13,7 +13,6 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./contract-details-editor.component.css']
 })
 export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
-
   public contract: Contract;
   public contractId: number;
   public processing = false;
@@ -24,6 +23,7 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
   public ranks = Object.values(Rank);
   public isUserCanUpdateContract = false;
   public isAdventurer;
+  public customerName;
   public currentUser: User;
   private accountSubscription: Subscription;
   public executor: Adventurer;
@@ -35,6 +35,7 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
               private toastService: ToastService,
               private fb: FormBuilder,
               private accountService: AccountService,
+              private usersService: UsersService,
               private adventurerService: AdventurersService) {
   }
 
@@ -61,6 +62,12 @@ export class ContractDetailsEditorComponent implements OnInit, OnDestroy {
         }
       ),
     ).subscribe(contract => {
+      this.usersService.getById(contract.customer).subscribe(customer => {
+        this.customerName = customer.name;
+      }, exception => {
+        this.customerName = contract.customer;
+      });
+
       this.initContract(contract);
     }, error => {
       this.toastService.show('Ошибка', 'Ошибка при загрузке контракта');

@@ -17,11 +17,13 @@
       Ожидает выплату награды в ближайшем офисе.
     </div>
 
-    <div class="alert alert-success" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Accepted && !contract.cancellationComment">
+    <div class="alert alert-success" role="alert"
+         *ngIf="contract.contractStatus == contractStatusEnum.Accepted && !contract.cancellationComment">
       Контракт принят гильдией. Ожидает взятие авантюристом на исполнение.
     </div>
 
-    <div class="alert alert-warning" role="alert" *ngIf="contract.contractStatus == contractStatusEnum.Accepted && contract.cancellationComment">
+    <div class="alert alert-warning" role="alert"
+         *ngIf="contract.contractStatus == contractStatusEnum.Accepted && contract.cancellationComment">
       Контракт был отменен авантюристом. Проверьте комментарий авантюриста. Контракт ожидает взятия другим авантюристом.
     </div>
 
@@ -37,6 +39,18 @@
       <div class="form-group">
         <label for="contractName">Название</label>
         <label class="form-control" id="contractName">{{contract.nameContract}}</label>
+      </div>
+
+      <div class="form-group">
+        <label for="customerName">Контрактодатель</label>
+        <label class="form-control" id="customerName">
+          <ng-container *ngIf="customerName">
+            {{customerName}}
+          </ng-container>
+          <ng-container *ngIf="!customerName">
+            loading...
+          </ng-container>
+        </label>
       </div>
 
       <div class="form-group">

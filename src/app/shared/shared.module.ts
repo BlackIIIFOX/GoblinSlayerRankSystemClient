@@ -4,14 +4,16 @@ import {RouterModule} from '@angular/router';
 import {ListErrorsComponent} from './layout';
 import {ContractStatusPipe} from './contract-status.pipe';
 import { RankPipe } from './rank.pipe';
+import { AdventurerStatusPipe } from './adventurer-status.pipe';
 
 @NgModule({
-  declarations: [ListErrorsComponent, ContractStatusPipe, RankPipe],
-  exports: [
-    ListErrorsComponent,
-    ContractStatusPipe,
-    RankPipe
-  ],
+  declarations: [ListErrorsComponent, ContractStatusPipe, RankPipe, AdventurerStatusPipe],
+    exports: [
+        ListErrorsComponent,
+        ContractStatusPipe,
+        RankPipe,
+        AdventurerStatusPipe
+    ],
   imports: [
     CommonModule,
     RouterModule

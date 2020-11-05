@@ -63,6 +63,11 @@
           *ngIf="currentUser.roles.includes(RoleEnum.Adventurer)">
         <a class="nav-link" routerLink="./adventurer-dashboard">Панель авантюриста</a>
       </li>
+
+      <li class="nav-item" [ngClass]="{active: router.url.includes('distributor-dashboard')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Distributor)">
+        <a class="nav-link" routerLink="./distributor-dashboard">Панель распределителя рангов</a>
+      </li>
     </ul>
 
     <!-- Show this for logged in users -->

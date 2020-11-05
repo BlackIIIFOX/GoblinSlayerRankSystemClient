@@ -33,6 +33,8 @@ import { MyNotificationsComponent } from './my-notifications/my-notifications.co
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { RegistrarDashboardComponent } from './registrar-dashboard/registrar-dashboard.component';
 import { ContractItemComponent } from './contract-item/contract-item.component';
+import { DistributorDashboardComponent } from './distributor-dashboard/distributor-dashboard.component';
+import { AdventurerRankEditorComponent } from './adventurer-rank-editor/adventurer-rank-editor.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { ContractItemComponent } from './contract-item/contract-item.component';
     MyNotificationsComponent,
     AccountSettingsComponent,
     RegistrarDashboardComponent,
-    ContractItemComponent
+    ContractItemComponent,
+    DistributorDashboardComponent,
+    AdventurerRankEditorComponent
   ],
   imports: [
     BrowserModule,

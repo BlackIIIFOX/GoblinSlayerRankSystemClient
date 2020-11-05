@@ -87,7 +87,7 @@
         </a>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLogged">
 
-          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-inline d-sm-none"
+          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-inline d-sm-none" disabled
                   (click)="$event.preventDefault()">
             Публичная страница
             <div class="d-none d-sm-block" disabled>

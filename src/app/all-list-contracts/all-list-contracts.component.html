@@ -1,17 +1,22 @@
 <div class="container mt-5 mb-5">
-  <h2>Контракты</h2>
+  <h2 *ngIf="!isListForAdventurer">Контракты</h2>
+
+  <h2 *ngIf="isListForAdventurer">Контракты. Ваш {{adventurerInfo.rank | rank}} ({{adventurerInfo.experience}}
+    опыта)</h2>
 
   <div class="row">
     <input class="form-control col-lg-4 mr-sm-2 mr-xl-0" placeholder="Название" type="text" name="searchTerm"
            [(ngModel)]="nameContractFilter"/>
 
-    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="statusSelect" [(ngModel)]="contractStatusFilter"
+    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="statusSelect"
+            [(ngModel)]="contractStatusFilter"
             *ngIf="!isListForAdventurer">
       <option value="" selected disabled hidden>Статус</option>
       <option *ngFor="let status of contractStatus" [value]="status">{{status | contractStatus}}</option>
     </select>
 
-    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="contractExecutor" *ngIf="isListForAdventurer" [(ngModel)]="showOnlyMyContracts">
+    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="contractExecutor" *ngIf="isListForAdventurer"
+            [(ngModel)]="showOnlyMyContracts">
       <option [ngValue]="true">Мои</option>
       <option [ngValue]="false">Доступные</option>
     </select>
@@ -33,12 +38,13 @@
   <ng-container *ngIf="contracts$ | async as contracts; else loading">
     <div class="row mt-2">
       <ngb-pagination maxSize="3" class="col-sm-12 col-md-12 col-xl-auto"
-        [collectionSize]="(contractsService.total$ | async)!" [(page)]="contractsService.page"
-        [pageSize]="contractsService.pageSize">
+                      [collectionSize]="(contractsService.total$ | async)!" [(page)]="contractsService.page"
+                      [pageSize]="contractsService.pageSize">
       </ngb-pagination>
 
       <label>
-        <select class="custom-select col-xl-auto" style="width: auto" name="pageSize" [(ngModel)]="contractsService.pageSize">
+        <select class="custom-select col-xl-auto" style="width: auto" name="pageSize"
+                [(ngModel)]="contractsService.pageSize">
           <option [ngValue]="6">6 items per page</option>
           <option [ngValue]="9">9 items per page</option>
           <option [ngValue]="12">12 items per page</option>

@@ -63,6 +63,11 @@
           *ngIf="currentUser.roles.includes(RoleEnum.Adventurer)">
         <a class="nav-link" routerLink="./adventurer-dashboard">Панель авантюриста</a>
       </li>
+
+      <li class="nav-item" [ngClass]="{active: router.url.includes('distributor-dashboard')}"
+          *ngIf="currentUser.roles.includes(RoleEnum.Distributor)">
+        <a class="nav-link" routerLink="./distributor-dashboard">Панель распределителя рангов</a>
+      </li>
     </ul>
 
     <!-- Show this for logged in users -->
@@ -82,7 +87,7 @@
         </a>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLogged">
 
-          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-inline d-sm-none"
+          <button routerLink="/users/{{currentUser.id}}" class="dropdown-item d-inline d-sm-none" disabled
                   (click)="$event.preventDefault()">
             Публичная страница
             <div class="d-none d-sm-block" disabled>

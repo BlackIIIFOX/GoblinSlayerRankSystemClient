@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BaseEntityService} from './base-entity.service';
-import {Adventurer, AdventurerStatus} from '../../models';
+import {Adventurer, AdventurerStatus, Rank} from '../../models';
 import {Observable} from 'rxjs';
 import {SearchResultPagination} from '../../models';
 
@@ -22,5 +22,14 @@ export class AdventurersService extends BaseEntityService<Adventurer> {
     };
 
     return this.apiService.put(`/adventurers/${id}/status/`, request);
+  }
+
+  public updateAdventurerRank(id: number, newRank: Rank, reason: string): Observable<Adventurer> {
+    const request = {
+      newRank,
+      reason
+    };
+
+    return this.apiService.put(`/adventurers/${id}/ranks/`, request);
   }
 }

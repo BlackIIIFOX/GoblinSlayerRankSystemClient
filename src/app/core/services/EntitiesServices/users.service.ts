@@ -17,7 +17,7 @@ export class UsersService extends BaseEntityService<User> {
     return this.getAll('/admin/users/');
   }
 
-  getById(id: number) {
+  getById(id: number): Observable<User> {
     return this.apiService.get(`/users/${id}`);
   }
 

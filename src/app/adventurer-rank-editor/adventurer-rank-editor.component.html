@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">Поднятие/понижение ранга</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="rankUpdateForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Ранг</label>
+      <select class="form-control" id="exampleFormControlSelect1" [formControl]="rank"
+              [ngClass]="{ 'is-invalid': submitted && rank.errors}">
+        <option value="" selected disabled hidden>Ранг</option>
+        <option *ngFor="let rank of ranks" [value]="rank">{{rank | rank}}</option>
+      </select>
+      <div *ngIf="submitted && rank.errors" class="invalid-feedback">
+        <div *ngIf="rank.errors.required">Выберите ранг</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Причина изменения</label>
+      <input type="text" class="form-control" id="address" [formControl]="reason"
+             [ngClass]="{ 'is-invalid': submitted && reason.errors }">
+      <div *ngIf="submitted && reason.errors" class="invalid-feedback">
+        <div *ngIf="reason.errors.required">Введите причину</div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="submit">
+        Обновить
+      </button>
+    </div>
+  </form>
+</div>

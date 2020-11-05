@@ -10,12 +10,12 @@ import {RegistrationComponent} from './registration/registration.component';
 import {CreateNewContractComponent} from './create-new-contract/create-new-contract.component';
 import {MyListContractsComponent} from './my-list-contracts/my-list-contracts.component';
 import {ContractDetailsEditorComponent} from './contract-details-editor/contract-details-editor.component';
-import {AllListContractsComponent} from './all-list-contracts/all-list-contracts.component';
 import {AdventurerDashboardComponent} from './adventurer-dashboard/adventurer-dashboard.component';
 import {AdventurersStatementsComponent} from './adventurers-statements/adventurers-statements.component';
 import {MyNotificationsComponent} from './my-notifications/my-notifications.component';
 import {AccountSettingsComponent} from './account-settings/account-settings.component';
 import {RegistrarDashboardComponent} from './registrar-dashboard/registrar-dashboard.component';
+import {DistributorDashboardComponent} from './distributor-dashboard/distributor-dashboard.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'content', pathMatch: 'full'},
@@ -35,7 +35,8 @@ const routes: Routes = [
       {path: 'adventurer-dashboard', component: AdventurerDashboardComponent},
       {path: 'adventurers-statements', component: AdventurersStatementsComponent},
       {path: 'profile/notifications', component: MyNotificationsComponent},
-      {path: 'profile/settings', component: AccountSettingsComponent}
+      {path: 'profile/settings', component: AccountSettingsComponent},
+      {path: 'distributor-dashboard', component: DistributorDashboardComponent}
     ]
   },
   {

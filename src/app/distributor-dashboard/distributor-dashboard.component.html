@@ -1,0 +1,79 @@
+<div class="container mt-5 mb-5">
+  <h2>Авантюристы</h2>
+
+  <div class="row">
+    <input class="form-control col-lg-4 mr-sm-2 mr-xl-0" placeholder="Имя авантюриста" type="text" name="searchTerm"
+           [(ngModel)]="nameFilter"/>
+
+    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="statusSelect"
+            [(ngModel)]="adventurerStatusFilter">
+      <option value="" selected disabled hidden>Статус</option>
+      <option *ngFor="let status of adventurerStatus" [value]="status">{{status | adventurerStatus}}</option>
+    </select>
+
+    <select class="form-control col-xl-2 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" id="rankSelect" [(ngModel)]="rankFilter">
+      <option value="" selected disabled hidden>Ранг</option>
+      <option *ngFor="let rank of ranks" [value]="rank">{{rank | rank}}</option>
+    </select>
+
+    <button type="button" class="btn btn-primary col-xl-1 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" (click)="clearSearch()">
+      Очистить
+    </button>
+
+    <button type="button" class="btn btn-primary col-xl-1 mr-sm-2 ml-xl-2 mt-2 mt-xl-0" (click)="search()">
+      Поиск
+    </button>
+  </div>
+
+  <ng-container *ngIf="adventurers$ | async as adventurers; else loading">
+    <div class="row mt-2">
+      <ngb-pagination maxSize="3" class="col-sm-12 col-md-12 col-xl-auto"
+                      [collectionSize]="(adventurersService.total$ | async)!" [(page)]="adventurersService.page"
+                      [pageSize]="adventurersService.pageSize">
+      </ngb-pagination>
+
+      <label>
+        <select class="custom-select col-xl-auto" style="width: auto" name="pageSize"
+                [(ngModel)]="adventurersService.pageSize">
+          <option [ngValue]="6">6 items per page</option>
+          <option [ngValue]="9">9 items per page</option>
+          <option [ngValue]="12">12 items per page</option>
+          <option [ngValue]="36">36 items per page</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="row row-cols-1 mt-3">
+      <ng-container *ngIf="adventurers.length; else noItems">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Имя пользователя</th>
+              <th scope="col">Ранг</th>
+              <th scope="col">Статус</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+          <tbody>
+            <tr *ngFor="let adventurer of adventurers" (click)="selectAdventurer($event, adventurer)">
+              <td class="align-middle">{{adventurer.name}}</td>
+              <td class="align-middle">{{adventurer.rank | rank}} ({{adventurer.experience}} опыта)</td>
+              <td class="align-middle">{{adventurer.status | adventurerStatus}}</td>
+              <td class="align-middle">
+                <button type="button" class="btn btn-success m-1" (click)="editRank(adventurer)"><i
+                  class="fas fa-edit"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </ng-container>
+
+
+      <ng-template #noItems>
+        <p>Авантюристы отсутсвуют.</p>
+      </ng-template>
+    </div>
+  </ng-container>
+  <ng-template #loading>loading...</ng-template>
+</div>

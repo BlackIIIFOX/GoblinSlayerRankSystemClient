@@ -47,8 +47,8 @@
       <label for="address">Адрес проживания</label>
       <input type="text" class="form-control" id="address" [formControl]="address"
              [ngClass]="{ 'is-invalid': submitted && email.errors }">
-      <div *ngIf="submitted && fullName.errors" class="invalid-feedback">
-        <div *ngIf="fullName.errors.required">Введите ваши данные</div>
+      <div *ngIf="submitted && address.errors" class="invalid-feedback">
+        <div *ngIf="address.errors.required">Введите ваши данные</div>
       </div>
     </div>
 

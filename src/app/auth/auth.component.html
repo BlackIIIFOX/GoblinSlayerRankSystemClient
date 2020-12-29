@@ -8,6 +8,7 @@
           <fieldset class="form-group">
             <input
               name="email"
+              id="email"
               formControlName="email"
               placeholder="Email"
               class="form-control form-control-lg"
@@ -16,6 +17,7 @@
           <fieldset class="form-group">
             <input
               formControlName="password"
+              id="password"
               placeholder="Password"
               class="form-control form-control-lg"
               type="password"/>
@@ -23,7 +25,9 @@
         </fieldset>
 
         <div class="text-center">
-          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid || isSubmitting" type="submit">
+          <button class="btn btn-lg btn-primary pull-xs-right"
+                  id="auth-button"
+                  [disabled]="!authForm.valid || isSubmitting" type="submit">
             Войти
           </button>
         </div>

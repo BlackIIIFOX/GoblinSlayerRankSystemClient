@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastService, UsersService} from '../core/services';
-import {CustomerCreate, AdventurerCreate} from '../core/models';
+import {AccountService, ToastService, UsersService} from '../core';
+import {CustomerCreate, AdventurerCreate} from '../core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -18,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   isAdventurerRegistration: boolean;
 
-  constructor(private usersService: UsersService,
+  constructor(private accountService: AccountService,
               private fb: FormBuilder,
               private router: Router,
               private toastService: ToastService) {
@@ -89,7 +89,7 @@ export class RegistrationComponent implements OnInit {
         reason: this.reason.value
       };
 
-      registrationObservable = this.usersService.createAdventurer(newAdventurer);
+      registrationObservable = this.accountService.createAdventurer(newAdventurer);
     } else {
       const newContractor: CustomerCreate = {
         address: this.address.value,
@@ -98,7 +98,7 @@ export class RegistrationComponent implements OnInit {
         password: this.password.value
       };
 
-      registrationObservable = this.usersService.createCustomer(newContractor);
+      registrationObservable = this.accountService.createCustomer(newContractor);
     }
 
     registrationObservable.subscribe(newUser => {

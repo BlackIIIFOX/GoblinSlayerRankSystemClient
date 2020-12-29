@@ -21,14 +21,6 @@ export class UsersService extends BaseEntityService<User> {
     return this.apiService.get(`/users/${id}`);
   }
 
-  createCustomer(newUser: CustomerCreate) {
-    return this.apiService.post('/users/', newUser);
-  }
-
-  createAdventurer(newUser: AdventurerCreate) {
-    return this.apiService.post('/adventurers/', newUser);
-  }
-
   createUser(newUser: AdminCreate) {
     return this.apiService.post('/admin/users/', newUser);
   }

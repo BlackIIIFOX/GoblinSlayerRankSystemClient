@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable, of, ReplaySubject} from 'rxjs';
-import {AccountPasswordUpdate, AccountUpdate, Role, User} from '../models';
+import {AccountPasswordUpdate, AccountUpdate, AdventurerCreate, CustomerCreate, Role, User} from '../models';
 import {delay, distinctUntilChanged, flatMap, map, tap} from 'rxjs/operators';
 import {ApiService} from './api.service';
 import {JwtService} from './jwt.service';
@@ -57,6 +57,22 @@ export class AccountService {
           );
         }
       ));
+  }
+
+  /**
+   * Create customer
+   * @param newUser customer model
+   */
+  createCustomer(newUser: CustomerCreate) {
+    return this.apiService.post('/users/', newUser);
+  }
+
+  /**
+   * Create adventurer
+   * @param newUser adventurer model
+   */
+  createAdventurer(newUser: AdventurerCreate) {
+    return this.apiService.post('/adventurers/', newUser);
   }
 
   /**

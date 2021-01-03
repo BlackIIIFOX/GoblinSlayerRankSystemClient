@@ -66,10 +66,12 @@
         </div>
 
         <div class="text-center">
-          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="submit" *ngIf="!isAdventurerRegistration">
+          <button class="btn btn-lg btn-primary pull-xs-right" id="contractor-registration-button"
+                  [disabled]="processing" type="submit" *ngIf="!isAdventurerRegistration">
             Регистрация
           </button>
-          <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="processing" type="submit" *ngIf="isAdventurerRegistration">
+          <button class="btn btn-lg btn-primary pull-xs-right" id="adventurer-registration-button"
+                  [disabled]="processing" type="submit" *ngIf="isAdventurerRegistration">
             Подать заявку
           </button>
         </div>

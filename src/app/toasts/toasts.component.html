@@ -1,8 +1,10 @@
 <ngb-toast
-  class="bg-success text-white"
+  class="toast-element bg-success text-white"
   *ngFor="let toast of toastService.toasts"
   [header]="toast.header" [autohide]="true" [delay]="toast.delay || 5000"
   (hide)="toastService.remove(toast)"
 >
-  {{toast.body}}
+  <div class="toast-message">
+    {{toast.body}}
+  </div>
 </ngb-toast>

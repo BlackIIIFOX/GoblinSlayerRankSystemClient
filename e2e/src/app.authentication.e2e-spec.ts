@@ -1,6 +1,4 @@
 import {$, browser, by, element, logging, protractor, ProtractorExpectedConditions} from 'protractor';
-import {ContractorRegistrationPage} from './contactor-registration.po';
-import * as uuid from 'uuid';
 import {AuthenticationPage} from './authentication.po';
 import {NavBar} from './nav-bar.po';
 
@@ -24,7 +22,7 @@ describe('authentication', () => {
     authPage.getEmailElement().sendKeys(login);
     authPage.getPasswordElement().sendKeys(password);
     authPage.getAuthButton().click();
-    // browser.sleep(3000);
+
     browser.waitForAngularEnabled(false);
     browser.wait(EC.presenceOf($('#dropdownMenuLogged')), 3000);
   });

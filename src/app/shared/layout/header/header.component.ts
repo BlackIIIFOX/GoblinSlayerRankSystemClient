@@ -4,6 +4,7 @@ import {Role} from '../../../core';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../../core/services/notification.service';
 import {Subscription} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import {Subscription} from 'rxjs';
 
 export class HeaderComponent implements OnInit, OnDestroy {
   public currentUser: User;
+  public userAvatar: string;
   public RoleEnum = Role;
 
   // For xs devices.
@@ -55,6 +57,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       (userData) => {
         if (userData) {
           this.currentUser = userData;
+
+          if (this.currentUser.avatar != null)
+          {
+            this.userAvatar = `${environment.api_url}/files/${this.currentUser.avatar}`;
+          }
+          else
+          {
+            this.userAvatar = 'https://funpay.ru/img/layout/avatar.png';
+          }
         }
       }
     );

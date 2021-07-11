@@ -16,4 +16,5 @@ export interface Contract {
   registrarComment: string;
   performedComment: string;
   cancellationComment: string;
+  icon: number;
 }

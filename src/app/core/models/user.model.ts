@@ -7,4 +7,5 @@ export interface User {
   address: string;
   roles: Array<Role>;
   isBlocked: boolean;
+  avatar: number;
 }

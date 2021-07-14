@@ -1,6 +1,8 @@
 # GoblinSlayerRankSystemClient
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
+Course project on discipline "Методология программной инженерии" in ITMO university. The web-client for the contract system in the world "Goblin Slayer". The web client allows you to work with the contract system and the administrative panel.
+
+<a href="#"> <img title="Contract System" src="https://raw.githubusercontent.com/paulrozhkin/the-contract-system-web-client/master/github-resources/contacts-list.png" alt="Contract System" width="800"  style="border: 3px solid #555;" /> </a>
 
 ## Linked Repositories
 - [Server](https://github.com/paulrozhkin/the-contract-system-server)
